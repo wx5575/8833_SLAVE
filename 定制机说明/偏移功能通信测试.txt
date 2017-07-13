@@ -1,0 +1,28 @@
+//举例
+1、假设ACW电流档位是2mA,现在设置偏移电流为0.5mA,操作如下
+发送:	STEP:ACW:OFFSet 500#
+返回:	+0,"No error"#
+
+
+发送:	STEP:ACW:OFFSet?#
+返回:	0.500#
+
+
+2、假设DCW电流档位是2mA,现在设置偏移电流为0.5mA,操作如下
+发送:	STEP:DCW:OFFS 500#
+返回:	+0,"No error"#
+
+发送:	STEP:DCW:OFFS?#
+返回:	0.500#
+
+
+3、GR的偏移电流单位是mΩ,现在设置偏移电阻为23.4mΩ,操作如下
+发送:	STEP:GR:OFFS 023.4#
+返回:	+0,"No error"#
+
+发送:	STEP:GR:OFFS?#
+返回:	023.4#
+
+
+
+

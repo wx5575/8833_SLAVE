@@ -1,0 +1,92 @@
+/*
+ * Copyright(c) 2016,南京长盛仪器
+ * All rights reserved
+ * 文件名称：主要函数的说明.c
+ * 摘  要  ：用户的应用程序入口，初始化软硬件，建立所需的任务
+ * 当前版本：V1.0，编写者：王鑫
+ * 历史版本：
+ * 修改记录：
+ *
+ */
+
+/*
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+整个代码中有如下任务被创建使用
+    
+    startup_task //启动任务 用来初始化软硬件 和创建main_task 任务，完成后即销毁了
+    main_task //主任务
+    keyscan_task //按键任务
+    sample_task //采样任务
+    schedule_task //测试状态机调度任务
+    modbus_polling_task //modbus从机监听任务 接口板是主机主板是从机
+    modbus_master_send_task //modbus主机发送任务 直流测试模块是从机 主板是主机
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+文件 cs99xx.c
+    test_dis //用于显示测试时的信息，除了测试时间
+    updata_time //更新测试时间的显存，不会立即显示出结果
+
+文件 app.c
+    main_task //主任务函数,完成仪器的主要功能，是唯一访问界面的任务，这是有意设计的
+    
+文件 general_test.c
+    serve_test //测试程序的入口 进入测试界面时首先调用的函数
+    
+文件 serve_test.c
+    load_data //加载当前步数据到内存，此函数在当前步变量cur_step更新时调用
+    init_test_irq_fun //次函数是在进入测试前要根据具体的需要了初始化测试状态机的函数
+                      //例如: N模式与G模式和大电容测试时使用的测试流程各不相同，就是
+                      //在这里改变的状态机函数
+
+文件 cs99xx_set_par_path.c
+    init_par_info_list //此函数会根据当前模式来调用对应的设置参数初始化链表，这个链表是
+                       //整个设置界面非常关键的数据结构，同时它的存在也方便了界面的修改和
+                       //定制。
+                       
+文件 GUI_Draw.c
+    DATA_INFO menu_par[] //这是一个大数组，里面的每个成员的位置都是有序的
+                         //对应宏MENU_ENUM值,这个数组与 init_par_info_list 密切相关
+                         
+文件 cs99xx_parameter.c
+    set_subtask //设置子任务入口
+    menu_subtask //菜单子任务的入口
+    test_subtask //测试子任务入口
+    help_subtask //帮助子任务入口
+    
+    //所谓子任务就是主任务在接收到不同的信息后直接调用的处理函数，其实还是在main_task中
+    
+文件 calibration.c
+    correctness //此函数是校准程序的入口
+    
+文件 auto_calibration.c
+    auto_calibration //自动校准的入口函数
+    
+文件 mb_server.c
+    user_read_write_mult_hold_reg_hook_m //modbus主机钩子函数，此函数完成的是主板与直流
+                      //模块等测试模块的通信
+    user_read_write_mult_hold_reg_hook_s //modbus从机钩子函数，此函数完成的是主板与通信
+                      //板的通信指令的处理入口
+    
+文件 cs99xx_ir_shift_gear.c
+    ir_auto_find_gear //此函数是绝缘电阻IR在测试时使用的自动换档函数、
+    
+文件 cs99xx_type.c
+    const static TYPE_STR type_pool[] __at(TYPE_POOL_ADDR) //大数组，在flash中存放的
+                      //静态数组，里面是各个型号的信息，包括初始化函数
+    
+文件 cs99xx_struct.h
+    //此文件中定义了系统中使用的主要数据结构体定义
+    
+文件 cs99xx_mem_api.c
+    //统一化存储接口，主要是为了解决使用不同存储介质时将底层实现隔离，与上层应用无关
+    
+文件 cs99xx_updata.h
+    //程序每编译一次，系统就会自动的记录一条时间信息，他的作用不在于记录本身，而是利用
+    //他能够在编译前自动更改文件内容，从而触发编译器对引用了该头文件的文件重新进行编译
+    //完美解决了当我选择支持"bootloader"与"不支持bootloader"时需要全部重新编译那些与中
+    //断向量表设置相关的文件misc.c,system_stm32f10x.c,以及应用程序中使用到的app.c 
+    //BSP_config.c文件
+    
+*/
+
+

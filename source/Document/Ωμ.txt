@@ -1,0 +1,240 @@
+宋体小五
+
+0x7e00
+________,
+________,
+________,
+_X__X___,
+_X__X___,
+_X__X___,
+_X__X___,
+_XXX_X__,
+_X______,
+_X______,
+________,
+________,
+
+0x2f00
+________,
+________,
+________,
+___X____,
+___X____,
+__X_____,
+__X_____,
+_X______,
+_X______,
+_X______,
+X_______,
+________,
+
+
+
+调整冒号的高度，适应中英两种环境
+0xa3ba
+________,________,
+________,________,
+________,________,
+____XX__,________,
+____XX__,________,
+________,________,
+________,________,
+________,________,
+____XX__,________,
+____XX__,________,
+________,________,
+________,________,
+
+0xa6b8
+
+________,________,
+________,________,
+__XXX___,________,
+_X___X__,________,
+X_____X_,________,
+X_____X_,________,
+X_____X_,________,
+_X___X__,________,
+__X_X___,________,
+XXX_XXX_,________,
+________,________,
+________,________,
+
+
+
+
+宋体11F 0xa6b8
+________,________,
+________,________,
+________,________,
+__XXXX__,________,
+_X____X_,________,
+X______X,________,
+X______X,________,
+X______X,________,
+X______X,________,
+_X____X_,________,
+__X__X__,________,
+X_X__X_X,________,
+XXX__XXX,________,
+________,________,
+________,________,
+
+
+SimSunF_15 0x7e00 (宋体11)
+________,
+________,
+________,
+________,
+________,
+_XX__XX_,
+__X___X_,
+__X___X_,
+__X___X_,
+__X__XX_,
+__XXX_XX,
+__X_____,
+_XXX____,
+________,
+________,
+
+________,________,
+________,________,
+________,________,
+__XXXX__,________,
+_X____X_,________,
+X______X,________,
+X______X,________,
+X______X,________,
+X______X,________,
+_X____X_,________,
+__X__X__,________,
+X_X__X_X,________,
+XXX__XXX,________,
+________,________,
+________,________,
+
+
+
+
+/* 宋体小四加粗 0x5700 */
+________,________,
+________,________,
+________,________,
+XXXX__XX,XX__XXX_,
+_XX____X,X____X__,
+_XX____X,X____X__,
+__XX___X,XX___X__,
+__XX__X_,XX__X___,
+__XX__X_,XX__X___,
+___XX_X_,_X__X___,
+___XX_X_,_X__X___,
+____XX__,__XX____,
+____XX__,__XX____,
+____XX__,__XX____,
+________,________,
+________,________,
+
+/* T 0x5400*/
+________,________,
+________,________,
+________,________,
+XXXXXXXX,________,
+X__XX__X,________,
+X__XX__X,________,
+___XX___,________,
+___XX___,________,
+___XX___,________,
+___XX___,________,
+___XX___,________,
+___XX___,________,
+___XX___,________,
+_XXXXXX_,________,
+________,________,
+________,________,
+
+//调整下字母间的间距，使之更加紧凑
+GUI_FLASH const GUI_CHARINFO GUI_FontHZSimSun_12_CharInfo[] = {
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0041},/* A 22 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0042},/* B 23 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0043},/* C 24 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0044},/* D 25 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0045},/* E 26 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0046},/* F 27 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0047},/* G 28 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0048},/* H 29 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0049},/* I 30 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004a},/* J 31 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004b},/* K 32 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004c},/* L 33 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004d},/* M 34 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004e},/* N 35 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_004f},/* O 36 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0050},/* P 37 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0051},/* Q 38 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0052},/* R 39 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0053},/* S 40 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0054},/* T 41 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0055},/* U 42 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0056},/* V 43 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0057},/* W 44 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0058},/* X 45 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0059},/* Y 46 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_005a},/* Z 47 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_005f},/* _ 48 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0060},/* ` 49 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0061},/* a 50 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0062},/* b 51 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0063},/* c 52 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0064},/* d 53 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0065},/* e 54 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0066},/* f 55 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0067},/* g 56 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0068},/* h 57 */
+{ 4, 4, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0069},/* i 58 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006a},/* j 59 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006b},/* k 60 */
+{ 4, 4, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006c},/* l 61 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006d},/* m 62 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006e},/* n 63 */
+{ 5, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_006f},/* o 64 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0070},/* p 65 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0071},/* q 66 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0072},/* r 67 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0073},/* s 68 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0074},/* t 69 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0075},/* u 70 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0076},/* v 71 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0077},/* w 72 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0078},/* x 73 */
+{ 6, 6, 1, (void GUI_FLASH *)&acFontHZSimSun_12_0079},/* y 74 */
+{ 5, 5, 1, (void GUI_FLASH *)&acFontHZSimSun_12_007a},/* z 75 */
+
+
+宋体小四小写字母的变宽显示设置
+{ 9, 9, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0061},/* a 44 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0062},/* b 45 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0063},/* c 46 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0064},/* d 47 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0065},/* e 48 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0066},/* f 49 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0067},/* g 50 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0068},/* h 51 */
+{ 7, 7, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0069},/* i 52 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006a},/* j 53 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006b},/* k 54 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006c},/* l 55 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006d},/* m 56 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006e},/* n 57 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_006f},/* o 58 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0070},/* p 59 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0071},/* q 60 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0072},/* r 61 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0073},/* s 62 */
+{ 7, 7, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0074},/* t 63 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0075},/* u 64 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0076},/* v 65 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0077},/* w 66 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0078},/* x 67 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_0079},/* y 68 */
+{ 8, 8, 2, (void GUI_FLASH *)&acFontHZSimSun_16_007a},/* z 69 */

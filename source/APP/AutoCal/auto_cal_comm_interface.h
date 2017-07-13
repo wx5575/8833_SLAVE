@@ -1,0 +1,6 @@
+
+#ifndef __AUTO_CAL_COMM_INTERFACE_H__
+#define __AUTO_CAL_COMM_INTERFACE_H__
+
+
+#endif //__AUTO_CAL_COMM_INTERFACE_H__

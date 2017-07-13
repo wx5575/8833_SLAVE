@@ -1,0 +1,40 @@
+自动校准指令说明
+1.联机
+2.进入校准界面
+3.进行校准
+4.退出校准界面进入测试界面
+5.进行测试
+...（上面的2-5可能会多次循环）
+6.退出校准界面
+7.断开联机
+
+联机
+COMM:SADD 1#
+COMM:REM#
+脱机
+COMM:LOC#
+进入校准界面
+CAL:ENT#
+退出校准界面
+CALI:EXIT#
+其他
+CAL:POIN?#
+CAL:RANG?#
+CAL:MODE?#
+CAL:STAT?#
+
+
+uint8_t *scpi_cmd_buf[]=
+{
+	"CAL:EXIT#",
+	"CAL:POIN?#",
+	"CAL:RANG?#",
+	"CAL:MODE?#",
+	"CAL:STAT?#",
+	"CAL:LOAD ",
+};
+
+uint8 buf[100];
+strcpy(buf, scpi_cmd_buf[5]);
+strcat(buf, "1");
+strcat(buf, "#");

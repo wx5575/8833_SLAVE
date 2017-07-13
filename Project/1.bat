@@ -1,0 +1,1 @@
+echo /*%date% %time%*/>>.\cs99xx_update.h
