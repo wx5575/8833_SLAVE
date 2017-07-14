@@ -1,1 +1,1 @@
-del ..\cs99xx_zwp_output\obj\*.hex
+del ..\..\8833_SLAVE_output\obj\*.hex

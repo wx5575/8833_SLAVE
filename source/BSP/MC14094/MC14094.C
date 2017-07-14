@@ -21,12 +21,12 @@
 #define MC14094_CLRST()					(GPIO_ResetBits(GPIOB,GPIO_Pin_7))
 
 /* 液晶对比度调节 以RA结尾 */
-#define MC14094_SETCLK_RA()				(GPIO_SetBits(GPIOG,GPIO_Pin_9))
-#define MC14094_CLRCLK_RA()				(GPIO_ResetBits(GPIOG,GPIO_Pin_9))
-#define MC14094_SETDATA_RA()			(GPIO_SetBits(GPIOB,GPIO_Pin_11))
-#define MC14094_CLRDATA_RA()			(GPIO_ResetBits(GPIOB,GPIO_Pin_11))
-#define MC14094_SETST_RA()				(GPIO_SetBits(GPIOB,GPIO_Pin_10))
-#define MC14094_CLRST_RA()				(GPIO_ResetBits(GPIOB,GPIO_Pin_10))
+#define MC14094_SETCLK_RA()				//(GPIO_SetBits(GPIOG,GPIO_Pin_9))
+#define MC14094_CLRCLK_RA()				//(GPIO_ResetBits(GPIOG,GPIO_Pin_9))
+#define MC14094_SETDATA_RA()			//(GPIO_SetBits(GPIOB,GPIO_Pin_11))
+#define MC14094_CLRDATA_RA()			//(GPIO_ResetBits(GPIOB,GPIO_Pin_11))
+#define MC14094_SETST_RA()				//(GPIO_SetBits(GPIOB,GPIO_Pin_10))
+#define MC14094_CLRST_RA()				//(GPIO_ResetBits(GPIOB,GPIO_Pin_10))
 
 /* 测试端口控制 */
 #define MC14094_SETCLK_PORT()			(GPIO_SetBits(GPIOE,GPIO_Pin_6))
@@ -59,7 +59,7 @@ static void MC14094_GPIO_Config(void)
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;//推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//输出速度
     
-	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11;
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_9;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化端口B
 	
 	MC14094_CLRDATA_PORT();

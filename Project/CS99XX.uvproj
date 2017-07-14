@@ -141,7 +141,7 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
+            <UsePdscDebugDescription>0</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>7</TargetSelection>
@@ -362,7 +362,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\45PE16;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\source\BSP\SPI_FLASH;..\Project</IncludePath>
+              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\45PE16;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\BSP\USART_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\source\BSP\SPI_FLASH;..\Project;..\source\tools;..\source\SLAVE_MODULE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -930,6 +930,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\BSP\USART_Config\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>USART3.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\BSP\USART_Config\USART3.C</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1233,6 +1238,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>SLAVE_MODULE</GroupName>
+          <Files>
+            <File>
+              <FileName>com_comm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\com_comm.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_manage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\module_manage.c</FilePath>
+            </File>
+            <File>
+              <FileName>com1_comm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\com1_comm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Document</GroupName>
           <Files>
             <File>
@@ -1284,6 +1309,16 @@
               <FileName>cs99xx宋体小四.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\source\Document\cs99xx宋体小四.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tools</GroupName>
+          <Files>
+            <File>
+              <FileName>crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\tools\crc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1645,7 +1680,7 @@
               <MiscControls></MiscControls>
               <Define>BOOT_LOADER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\SPI_FLASH;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\Project;..\source\BSP\USART_Config</IncludePath>
+              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\SPI_FLASH;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\Project;..\source\BSP\USART_Config;..\source\tools</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2213,6 +2248,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\BSP\USART_Config\uart.c</FilePath>
             </File>
+            <File>
+              <FileName>USART3.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\BSP\USART_Config\USART3.C</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2516,6 +2556,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>SLAVE_MODULE</GroupName>
+          <Files>
+            <File>
+              <FileName>com_comm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\com_comm.c</FilePath>
+            </File>
+            <File>
+              <FileName>module_manage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\module_manage.c</FilePath>
+            </File>
+            <File>
+              <FileName>com1_comm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\SLAVE_MODULE\com1_comm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Document</GroupName>
           <Files>
             <File>
@@ -2567,6 +2627,16 @@
               <FileName>cs99xx宋体小四.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\source\Document\cs99xx宋体小四.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tools</GroupName>
+          <Files>
+            <File>
+              <FileName>crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\tools\crc.c</FilePath>
             </File>
           </Files>
         </Group>

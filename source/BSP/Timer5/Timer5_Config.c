@@ -53,6 +53,31 @@ void TIM5_it_init(u16 arr,u16 psc)
 	TIM_Cmd(TIM5, ENABLE);/* 在外面用开关来控制 */
 	return;
 }
+
+#define TIM5_MAX_SERVER_FUN     20 //tim3最大的服务函数的个数
+TIM_SERVER_FUN  tim_server_fun[TIM5_MAX_SERVER_FUN];
+
+uint8_t register_tim5_server_fun(TIM_SERVER_FUN fun)
+{
+    int32_t i = 0;
+    
+    for(i = 0; i < TIM5_MAX_SERVER_FUN; i++)
+    {
+        if(tim_server_fun[i] == NULL)
+        {
+            tim_server_fun[i] = fun;
+            break;
+        }
+    }
+    
+    if(i == TIM5_MAX_SERVER_FUN)
+    {
+        return 1;
+    }
+    
+    return 0;
+}
+
 /*
  *函数名：TIM5_IRQHandler
  *描述：定时器5中断服务程序
@@ -61,8 +86,23 @@ void TIM5_it_init(u16 arr,u16 psc)
 */
 void TIM5_IRQHandler(void)
 {
+    int32_t i = 0;
+    
 	OSIntEnter();
-	
+    
+    for(i = 0; i < TIM5_MAX_SERVER_FUN; i++)
+    {
+        if(tim_server_fun[i] != NULL)
+        {
+            tim_server_fun[i]();
+        }
+        /* 遇到第一个NULL后面全为NULL所以退出 */
+        else
+        {
+            break;
+        }
+    }
+    
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
 		TIM_ClearFlag(TIM5, TIM_FLAG_Update);	     //清中断标记

@@ -27,6 +27,7 @@
 #include    "serve_test.h"
 #include    "cs99xx_update.h"
 #include    "spi_flash.h"
+#include    "USART3.H"
 
 
 
@@ -146,6 +147,8 @@ void  bsp_init(void)
     init_gpio_switch_hv();/* 初始化高压开关GPIO */
     
 	systick_init();		/* 嘀嗒时钟配置 */
+    
+    usart3_config(115200);
 }
 
 /*

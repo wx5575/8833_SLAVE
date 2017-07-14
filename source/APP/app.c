@@ -39,6 +39,7 @@
 #include    "auto_calibration.h"
 #include    "dc_module.h"
 #include 	"spi_flash.h"
+#include    "module_manage.h"
 
 
 /***************************全局变量*************************/
@@ -360,10 +361,12 @@ void keyscan_task(void* p_arg)
  */
 void modbus_polling_task(void *p_arg)
 {
+    init_module_manage_env();
+    
 	while(1)
 	{
-		eMBPoll();
-        OSTimeDlyHMSM(0,0,0,3);
+        module_comm_task();
+        OSTimeDlyHMSM(0,0,0,10);
    	}
 }
 void modbus_master_polling_task(void *p_arg)
@@ -514,27 +517,27 @@ void create_other_task(void)
  					(void*)0,
  					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
  					));
- 	while(OS_ERR_NONE != OSTaskCreateExt(modbus_master_polling_task,
- 					(void*)0,
- 					&Modbus_M_Send_STK[MODBUS_M_SEND_STK_SIZE-1],
- 					MODBUS_M_SEND_TASK_PRIO,
- 					MODBUS_M_SEND_TASK_ID,
- 					&Modbus_M_Send_STK[0],
- 					MODBUS_M_SEND_STK_SIZE,
- 					(void*)0,
- 					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
- 					));
+// 	while(OS_ERR_NONE != OSTaskCreateExt(modbus_master_polling_task,
+// 					(void*)0,
+// 					&Modbus_M_Send_STK[MODBUS_M_SEND_STK_SIZE-1],
+// 					MODBUS_M_SEND_TASK_PRIO,
+// 					MODBUS_M_SEND_TASK_ID,
+// 					&Modbus_M_Send_STK[0],
+// 					MODBUS_M_SEND_STK_SIZE,
+// 					(void*)0,
+// 					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
+// 					));
     /* MODBUS主机发送任务 */
- 	while(OS_ERR_NONE != OSTaskCreateExt(modbus_master_send_task,
- 					(void*)0,
- 					&Modbus_Master_Send_STK[MODBUS_MASTER_SEND_STK_SIZE-1],
- 					MODBUS_MASTER_SEND_TASK_PRIO,
- 					MODBUS_MASTER_SEND_TASK_ID,
- 					&Modbus_Master_Send_STK[0],
- 					MODBUS_MASTER_SEND_STK_SIZE,
- 					(void*)0,
- 					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
- 					));
+// 	while(OS_ERR_NONE != OSTaskCreateExt(modbus_master_send_task,
+// 					(void*)0,
+// 					&Modbus_Master_Send_STK[MODBUS_MASTER_SEND_STK_SIZE-1],
+// 					MODBUS_MASTER_SEND_TASK_PRIO,
+// 					MODBUS_MASTER_SEND_TASK_ID,
+// 					&Modbus_Master_Send_STK[0],
+// 					MODBUS_MASTER_SEND_STK_SIZE,
+// 					(void*)0,
+// 					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
+// 					));
 }
 
 /*
@@ -625,7 +628,6 @@ void main_task(void* p_arg)
 	uint16_t* pkey_value = NULL;
 	int16_t start_delay = 0;
     EXE_STATUS_ENUM exe_status = RE_MAIN;
-//    uint8_t l_cal_lock = 0;/* 进入校准解锁标志 */
     
     exit_off();/* 关闭中断 */
     read_custom_par();/* 读出定制参数 必须先读定制参数在读其他参数 */
