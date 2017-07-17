@@ -27,7 +27,7 @@ static uint8_t get_com1_receive_over_flag(COM_STRUCT *com);
   * @brief  第1路串口结构信息
   */
 COM_STRUCT com1={
-    MODULE_COMM_IDLE,///<空闲状态
+    MODULE_COMM_RECEIVE,///<接收状态
     get_com1_send_frame,///<发送函数
     get_com1_resend_frame,///<重发函数
     receive_over_dispose,///<接收完成后的处理函数

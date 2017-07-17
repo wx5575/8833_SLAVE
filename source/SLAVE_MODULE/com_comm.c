@@ -31,9 +31,6 @@ void com_comm_status_machine(COM_STRUCT *com)
 {
     switch(com->status)
     {
-        case MODULE_COMM_IDLE:
-            com->status = MODULE_COMM_RECEIVE;
-            break;
         case MODULE_COMM_RECEIVE:
             if(com->get_receive_over_flag(com))
             {
@@ -45,8 +42,6 @@ void com_comm_status_machine(COM_STRUCT *com)
             {
                 com->status = MODULE_COMM_RECEIVE;//进入接收状态
             }
-            break;
-        case MODULE_COMM_TIMEOUT:
             break;
     }
 }
