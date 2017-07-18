@@ -24,43 +24,6 @@ MODULE_INF module=
     1///< 模块ID
 };
 
-uint8_t get_com_offset_add(COM_NUM com_num)
-{
-    uint8_t addr_offset[4] = {0, 16, 32, 48};//地址偏移，第一路0，第二路16，第三路32，第四路48
-    
-    return addr_offset[com_num];
-}
-
-void update_module_addr_flag(void)
-{
-    int32_t i = 0;
-    int32_t j = 0;
-    uint8_t addr = 0;
-    uint8_t offset_addr = 0;
-    COM_STRUCT* com_inf = NULL;
-    uint8_t id = 0;
-    
-    for(i = 0; i < 64; i++)
-    {
-        if(i == 0 || i == 16 || i == 32 || i == 48 || i > 64)
-        {
-            continue;
-        }
-        
-        id = road_inf_pool[i].module_inf.id;//id范围是1-15
-        
-        if(id != 0 && id < 16)
-        {
-            offset_addr = get_com_offset_add(road_inf_pool[i].com_num);
-            addr = offset_addr + id;
-            roads_flag.road_buf[j] = addr;
-            syn_test_port[j].com = com_inf;
-            j++;
-        }
-    }
-    
-    roads_flag.count = j;
-}
 /**
   * @brief  获取模块信息
   * @param  [in] data 数据
@@ -93,6 +56,14 @@ void add_crc_to_send_data(uint8_t *data, uint32_t len)
     p_u16 = (uint16_t *)&data[len];
     *p_u16 = crc_val;
 }
+void send_frame_data(COM_STRUCT *com, uint8_t *ack_frame, uint32_t frame_len)
+{
+    frame_len += FRAME_HEAD_SIZE;
+    add_crc_to_send_data((uint8_t*)ack_frame, frame_len);
+    frame_len += CRC_LEN;
+    com->send_fun(com, (uint8_t*)ack_frame, frame_len);
+    com->status = MODULE_COMM_SEND;//状态机走入发送状态
+}
 /**
   * @brief  串口1的接收处理函数
   * @param  [in] com_num 串口号
@@ -109,12 +80,18 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
     uint32_t frame_len = 0;
     
     /* CRC校验 */
-    p_crc = (uint16_t *)&data[len - 2];
-    crc_val = get_crc16(data, len - 2);
+    p_crc = (uint16_t *)&data[len - CRC_LEN];
+    crc_val = get_crc16(data, len - CRC_LEN);
+    
+    ack_frame = (void*)com->frame_buf;
+    ack_frame->addr = frame->addr;
+    ack_frame->fun_code = frame->fun_code;
     
     /* 校验失败放弃解析 */
     if(*p_crc != crc_val || crc_val == 0)
     {
+//        ack_frame->st = COMM_ST_CRC_ERROR;
+//        send_frame_data(com, (uint8_t*)ack_frame, frame_len);
         return;
     }
     
@@ -125,9 +102,7 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
     }
     
     /* 准备应答帧数据 */
-    ack_frame = (void*)com->frame_buf;
-    ack_frame->addr = frame->addr;
-    ack_frame->fun_code = frame->fun_code;
+    ack_frame->st = COMM_ST_NO_ERROR;
     
     /* 指令解析 */
     switch(frame->fun_code)
@@ -143,11 +118,7 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
     /* 发送应答 */
     if(frame->addr != 0)
     {
-        frame_len += FRAME_HEAD_SIZE;
-        add_crc_to_send_data((uint8_t*)ack_frame, frame_len);
-        frame_len += 2;
-        com->send_fun(com, (uint8_t*)ack_frame, frame_len);
-        com->status = MODULE_COMM_SEND;//状态机走入发送状态
+        send_frame_data(com, (uint8_t*)ack_frame, frame_len);
     }
 }
 

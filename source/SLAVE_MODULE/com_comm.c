@@ -1,4 +1,12 @@
-
+/**
+  ******************************************************************************
+  * @file    com_comm.h
+  * @author  王鑫
+  * @version V1.0.0
+  * @date    2017.7.13
+  * @brief   串口的结构信息
+  ******************************************************************************
+  */
 
 #include "module_manage.h"
 #include "string.h"
@@ -45,3 +53,5 @@ void com_comm_status_machine(COM_STRUCT *com)
             break;
     }
 }
+
+/************************ (C) COPYRIGHT 2017 长盛仪器 *****END OF FILE****/

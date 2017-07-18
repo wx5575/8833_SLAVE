@@ -12,6 +12,10 @@
 
 
 #include "cs99xx_struct.h"
+#include "com_comm.h"
+
+#define FRAME_HEAD_SIZE    4  ///<帧头的字节个数
+#define CRC_LEN             2  ///<CRC校验字节个数
 
 /**
   * @brief  系统错误码定义
@@ -51,46 +55,6 @@ typedef enum{
     COMM_ST_CRC_ERROR       = 119,  //<指令CRC校验错误
 }COMM_ST;
 
-typedef enum{
-    MODULE_COMM_RECEIVE,///<模块通信处于接收状态
-    MODULE_COMM_SEND,///<模块通信处于发送状态
-}MODULE_COMM_STATUS;
-
-/**
-  * @brief  串口编号
-  */
-typedef enum{
-    ROAD1_COM,///<第一路串口编号
-    ROAD2_COM,///<第二路串口编号
-    ROAD3_COM,///<第三路串口编号
-    ROAD4_COM,///<第四路串口编号
-}COM_NUM;
-typedef void (*COM_SEND_FUN)(uint8_t *, uint32_t);
-typedef void (*COM_RESEND_FUN)(void);
-typedef void (*COM_SET_ACK_TIMEOUT_FUN)(void);
-typedef void (*COM_EX_FUN)(void);
-
-#define RESEND_NUM          3 ///<最大重发次数
-#define WAIT_TIMEOUT_MS     500 ///<等待从机响应的超时时间 ms
-typedef struct COM_STRUCT_ COM_STRUCT;
-typedef void (*COM_SERVE_FUN)(COM_STRUCT *);
-typedef uint8_t (*COM_SERVE_R_U8_FUN)(COM_STRUCT *);
-typedef uint32_t (*COM_SERVE_R_U32_FUN)(COM_STRUCT *);
-typedef uint8_t* (*COM_SERVE_R_PU8_FUN)(COM_STRUCT *);
-
-struct COM_STRUCT_{
-    MODULE_COMM_STATUS status;///<串口状态 空闲状态 发送状态 接收状态
-    void (*send_fun)(COM_STRUCT *,uint8_t*,uint32_t);///<发送函数
-    COM_SERVE_FUN resend_fun;///<重发函数
-    
-    COM_SERVE_FUN receive_dispose_fun;///<接收完成后的处理函数
-    COM_SERVE_R_U8_FUN get_receive_over_flag;///<获取接收完成标志
-    
-    COM_SERVE_R_PU8_FUN get_com_frame;///<获取串口数据帧
-    COM_SERVE_R_U32_FUN get_com_frame_len;///<获取串口数据帧长度
-    COM_SERVE_R_U8_FUN get_com_send_status;///<获取串口通信的发送状态
-    uint8_t frame_buf[512];///<通信缓冲区
-};
 
 typedef struct{
     char name[20]; ///< 模块名称
@@ -118,7 +82,6 @@ typedef struct{
     COM_STRUCT *com;
 }SYN_TEST_PORT_INF;
 
-#define FRAME_HEAD_SIZE    4  ///<帧头的字节个数
 
 #pragma pack(1)
 typedef struct{
