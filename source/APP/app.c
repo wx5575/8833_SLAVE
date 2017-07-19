@@ -565,7 +565,7 @@ void exe_cur_status(EXE_STATUS_ENUM *exe_status)
         {
             clear_();   /* 清屏 */
             gui_draw_main();/* 绘出主界面 */
-            break; 
+            break;
         }
         case INTO_TEST://进入测试界面
         {

@@ -14,8 +14,15 @@
 #include "USART3.H"
 #include "Timer5_Config.h"
 
+uint8_t g_module_num;
 
 
+enum{
+    GET_MODULE_INF = 1,///<获取模块信息用来联机用
+    SET_MODULE_NUM,///<设置模块的编号，对于多路同步测试仪要告诉每个模块在系统中的编号,用这个编号来判断 \
+                    是否参与测试工作
+    
+};
 
 MODULE_INF module=
 {
@@ -36,10 +43,19 @@ void get_module_inf(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     memcpy(ack_data, &module, sizeof(module));
     *len = sizeof(module);
 }
+/**
+  * @brief  设置模块编号，使用这个编号模块可以从步骤参数的work_port中判断出是否参与当前的测试工作
+  * @param  [in] data 数据
+  * @param  [out] ack_data 应答数据
+  * @param  [out] len 应答数据的长度
+  * @retval 无
+  */
+void set_module_num(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    memcpy(&g_module_num, data, sizeof(g_module_num));
+    *len = 0;
+}
 
-enum{
-    GET_MODULE_INF = 1,
-};
 
 /**
   * @brief  向发送数据添加CRC校验
@@ -110,8 +126,11 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
         case GET_MODULE_INF:
             get_module_inf(frame->data, ack_frame->data, &frame_len);
             break;
+        case SET_MODULE_NUM:
+            set_module_num(frame->data, ack_frame->data, &frame_len);
+            break;
         default:
-            
+            ack_frame->st = COMM_ST_UNDEFINED;
             break;
     }
     

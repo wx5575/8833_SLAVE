@@ -101,6 +101,7 @@ typedef struct{
 MODULE_EXT ROAD_INF    *road_inf_pool;
 MODULE_EXT ROADS_FLAG  roads_flag;
 MODULE_EXT SYN_TEST_PORT_INF   syn_test_port[8];///最多8路同步测试
+MODULE_EXT uint8_t g_module_num;
 
 extern COM_STRUCT com1;
 
