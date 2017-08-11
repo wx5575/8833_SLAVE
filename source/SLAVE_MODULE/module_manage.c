@@ -26,7 +26,7 @@ enum{
 
 MODULE_INF module=
 {
-    "8833_BOARD",///< 模块名称
+    "8833-BOARD",///< 模块名称
     "V1.0.0",///< 模块版本
     1///< 模块ID
 };
@@ -55,7 +55,6 @@ void set_module_num(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     memcpy(&g_module_num, data, sizeof(g_module_num));
     *len = 0;
 }
-
 
 /**
   * @brief  向发送数据添加CRC校验

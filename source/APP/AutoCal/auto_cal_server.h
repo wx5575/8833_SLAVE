@@ -37,6 +37,7 @@ AUTO_CAL_SERVER_EXT AUTO_ELE_INFO *g_auto_ele_info;
 extern void get_res_cal_point_info(uint8_t mode, CAL_BASE_INFO* point, uint8_t n);
 extern void get_vol_cal_point_info(uint8_t mode, CAL_BASE_INFO* point, uint8_t n);
 extern void init_ui_ele_info(ELEMENT_INFO *ele, uint8_t buf[12][10]);
+//extern void draw_auto_cal_ui_ele(const GUI_FONT * pNewFont, ELEMENT_INFO* p);
 extern void transform_auto_cal_num_to_string(uint8_t *buf, uint16_t num);
 extern void transform_auto_cal_da_ad_to_string(uint8_t *buf, uint16_t value);
 extern void transform_auto_cal_gear_to_string(uint8_t *buf, uint16_t value);

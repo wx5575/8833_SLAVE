@@ -744,4 +744,355 @@ void init_ratio_all(void)
     init_ratio(IR);
     init_ratio(GR);
 }
+
+uint8_t get_ir_res_meal(void)
+{
+    uint8_t temp = 0;
+    
+    switch(type_spe.transformer_type)
+    {
+        default:
+        case TRANS_750V:
+        case TRANS_1kV:
+        case TRANS_2kV:
+            temp = 0;
+            break;
+        case TRANS_10kV:
+            switch(type_spe.ir_vol_range)
+            {
+                case IR_1kV:
+                case IR_1_5kV:
+                    if(type_spe.ir_res_h <= 10*1000)
+                    {
+                        temp = 0;
+                    }
+                    else
+                    {
+                        temp = 1;
+                    }
+                    break;
+                case IR_2_5kV:
+                    temp = 2;
+                    break;
+                case IR_5kV:
+                    temp = 2;
+                    break;
+                case IR_10kV:
+                    temp = 3;
+                    break;
+            }
+            break;
+        case TRANS_20kV:
+            break;
+        case TRANS_5kV:
+            switch(type_spe.ir_vol_range)
+            {
+                case IR_1kV:
+                case IR_1_5kV:
+                    if(type_spe.ir_res_h <= 10*1000) //单位Gohm
+                    {
+                        temp = 0;
+                    }
+                    else
+                    {
+                        temp = 1;
+                    }
+                    break;
+                case IR_2_5kV:
+                    temp = 2;
+                    break;
+                case IR_5kV:
+                    temp = 2;
+                    break;
+            }
+            break;
+    }
+    
+    /* 调试使用 */
+    if(g_cur_type->num == DEBUG_TYPE)
+    {
+        temp = 4;
+    }
+    
+    return temp;
+}
+
+uint8_t get_cal_dcw_vol_meal(void)
+{
+    return type_spe.dcw_vol_range;
+}
+uint8_t get_cal_acw_vol_meal(void)
+{
+    return type_spe.acw_vol_range;
+}
+uint8_t select_gr_cal_menu(void)
+{
+    uint8_t temp = 0;
+    
+    if(GR_VOL_DROP_EN > 0)
+    {
+        temp = 0;
+        cur_method = GR_V_CONT_MODEL;/* 校准时开启连续测试模式 */
+        send_dc_module_cmd(DC_MODULE_CMD_GEAR, cur_gear);
+        send_dc_module_cmd(DC_MODULE_CMD_METHOD, cur_method);
+    }
+    else
+    {
+        /* 直流 GR */
+        if(DC_GR_EN == ENABLE)
+        {
+            temp = 0;
+        }
+        /* 交流 GR */
+        else
+        {
+            switch(type_spe.gr_amp_type)
+            {
+                default:
+                case GR_AMP_32A:
+                    temp = 0;
+                    break;
+                case GR_AMP_40A:
+                    temp = 1;
+                    break;
+            }
+        }
+    }
+    
+    return temp;
+}
+uint8_t geat_ir_res_cal_points_num(void)
+{
+    uint8_t i = 0;
+    uint8_t meal = get_ir_res_meal();
+    
+    for(i = 0; i < 16; i++)
+    {
+        if(0 == ir_cur_cal.point_da[meal][i])
+        {
+            break;
+        }
+    }
+    
+    return i;
+}
+
+void get_acw_vol_cal_point_range(uint32_t *range)
+{
+	uint32_t i = 0;
+	uint32_t b = 0;
+	
+	if(type_spe.vol_is_segment == VOL_SEGMENT_YES)
+	{
+		for(i = 0; i < 3; i++)
+		{
+			range[i] = acw_vol_cal[type_spe.amp_type][0].point_da[type_spe.acw_vol_range][b + i][1];
+		}
+		
+		b = 3;
+	}
+	
+	for(i = 0; i < 3; i++)
+	{
+		range[b + i] = acw_vol_cal[type_spe.amp_type][1].point_da[type_spe.acw_vol_range][i][1];
+	}
+}
+void get_dcw_vol_cal_point_range(uint32_t *range)
+{
+	uint32_t i = 0;
+	uint32_t b = 0;
+	
+	if(type_spe.vol_is_segment == VOL_SEGMENT_YES)
+	{
+		for(i = 0; i < 3; i++)
+		{
+			range[i] = dcw_vol_cal[type_spe.amp_type][0].point_da[type_spe.dcw_vol_range][b + i][1];
+		}
+		
+		b = 3;
+	}
+	
+	for(i = 0; i < 3; i++)
+	{
+		range[b + i] = dcw_vol_cal[type_spe.amp_type][1].point_da[type_spe.dcw_vol_range][i][1];
+	}
+}
+void get_ir_vol_cal_point_range(uint32_t *range)
+{
+	uint32_t i = 0;
+	uint32_t b = 0;
+	
+    cur_set_meal = get_cal_ir_meal();//电压
+	
+	if(type_spe.vol_is_segment == VOL_SEGMENT_YES)
+	{
+		for(i = 0; i < 3; i++)
+		{
+			range[i] = ir_vol_cal[type_spe.amp_type][0].point_da[cur_set_meal][b + i][1];
+		}
+		
+		b = 3;
+	}
+	
+	for(i = 0; i < 3; i++)
+	{
+		range[b + i] = ir_vol_cal[type_spe.amp_type][1].point_da[cur_set_meal][i][1];
+	}
+}
+
+uint8_t get_cal_ir_meal(void)
+{
+    uint8_t temp = 0;
+    
+    if(type_spe.transformer_type == TRANS_10kV)
+    {
+        temp = IR_10kV;
+    }
+    else
+    {
+		switch(type_spe.transformer_type)
+		{
+			case TRANS_5kV:
+				switch(type_spe.ir_vol_range)
+				{
+					case IR_2_5kV:
+					case IR_5kV:
+						temp = type_spe.ir_vol_range;
+						break;
+					default:
+						temp = IR_1kV;
+						break;
+				}
+				break;
+			default:
+				temp = type_spe.ir_vol_range;
+				break;
+		}
+    }
+    
+    return temp;
+}
+// /*
+//  * 函数名：startup_cal
+//  * 描述  ：启动校准
+//  * 输入  ：mode 模式 gear 电流档位
+//  * 输出  ：无
+//  * 返回  ：无
+//  */
+void startup_cal(const int8_t mode, const int8_t gear) 
+{
+	/* 切换档位继电器 */
+	cur_mode = mode;
+	cur_gear = gear;
+    clear_test_flag();
+    clear_dc_gr_data();
+	relay_motion();
+    reset_posrts_mc14094_ctrl();
+	
+    if(!(mode == GR && DC_GR_EN))
+    {
+		amp_relay_ctrl_on();/* 功放继电器 */
+	}
+	MC14094_Updata();// 更新输出缓冲区
+    OSTimeDlyHMSM(0,0,0,50);
+    
+    relay_ready();
+	
+	MC14094_CMD(MC14094_A, MC14094_PLC_TEST, 0);/* 在复位状态下PLC这三个继电器都不吸合 */
+	MC14094_CMD(MC14094_A, MC14094_PLC_FAIL, 0);
+	MC14094_CMD(MC14094_A, MC14094_PLC_PASS, 0);
+	
+	/* 测试模式选择 */
+	if(sys_par.test_method == GND_MODE)
+	{
+		MC14094_CMD(MC14094_B, MC14094_GFI_RELAY, 1); /* k8 */
+		MC14094_CMD(MC14094_C, MC14094_C_GND_FLOAT, 1);/* 接地模式 */
+	}
+	else
+	{
+		MC14094_CMD(MC14094_B, MC14094_GFI_RELAY, 0); /* k8 */
+		MC14094_CMD(MC14094_C, MC14094_C_GND_FLOAT, 0);/* 浮地模式 */
+	}
+	
+	if(mode == GR)
+	{
+		MC14094_CMD(MC14094_C, MC14094_C_GR, 1);/* GR */
+	}
+	else
+	{
+		MC14094_CMD(MC14094_C, MC14094_C_GR, 0);/* ACW DCW IR */
+	}
+	
+	switch(mode)
+	{
+		case ACW:
+		case GR:
+		case BBD:
+			open_sine(60);/* 60HZ */
+			break;
+		case DCW:
+			if(type_spe.dcw_big_cap_en)
+			{
+				dcw_big_cap_cal();
+			}
+		case IR:
+			MC14094_CMD(MC14094_B, MC14094_AC_DC, 1);
+			open_sine(400);/* 400HZ */
+			break;
+	}
+	
+	MC14094_Updata();// 更新输出缓冲区
+	
+    set_sample_rate(50);
+    
+    if(mode == GR && DC_GR_EN)
+    {
+        off_sample_task();
+        test_flag.allow_dc_gr_fetch = 1;
+        test_flag.uart_next = 0;
+		OSTimeDlyHMSM(0,0,1,0);
+		amp_relay_ctrl_on();/* 功放继电器 */
+    }
+    else
+    {
+        on_sample_task();
+        resume_sample_task();
+    }
+	
+}
+
+// /*
+//  * 函数名：stop_cal
+//  * 描述  ：停止校准
+//  * 输入  ：mode 模式
+//  * 输出  ：无
+//  * 返回  ：无
+//  */
+void stop_cal(const int8_t mode)
+{
+	app_flag.dc_gr_module_status = DC_GR_STOPING;
+	DAC_Vol[0] = 0;
+	DAC_Vol[1] = SHORT_VREF_RESET;
+	DAC_Vol[2] = ARC_VREF_RESET;
+    disable_sample_task();
+    MC14094_CMD(MC14094_C, MC14094_C_GR, 0);/* ACW DCW IR */
+	irq_stop_relay_motion();/* 关闭电子开关 高压 */
+    
+	if(mode == GR)
+	{
+		/* 直流 */
+		if(DC_GR_EN)
+		{
+			/* 停止测试 */
+            send_dc_module_cmd(DC_MODULE_CMD_STOP, 0);
+			return;
+		}
+	}
+    
+	key_buzzer_time = KEY_DELAY_NORMAL;
+    
+	LED_TEST = LED_OFF;
+}
+
+
 /******************* (C) COPYRIGHT 2014 长盛仪器 *****END OF FILE****/
