@@ -13,6 +13,8 @@
 #include "crc.h"
 #include "USART3.H"
 #include "Timer5_Config.h"
+#include "auto_cal_comm.h"
+#include "auto_calibration.h"
 
 uint8_t g_module_num;
 
@@ -22,6 +24,9 @@ enum{
     SET_MODULE_NUM,///<设置模块的编号，对于多路同步测试仪要告诉每个模块在系统中的编号,用这个编号来判断 \
                     是否参与测试工作
     
+    SLAVE_ENTER_CAL_ST = 50,///<从机进入校准状态
+    GET_MODULE_CAL_POINTS = 58,///<获取模块的校准总个数
+    QUERY_CAL_POINT_INF = 60,///<查询校准点信息
 };
 
 MODULE_INF module=
@@ -54,6 +59,35 @@ void set_module_num(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     memcpy(&g_module_num, data, sizeof(g_module_num));
     *len = 0;
+}
+void get_module_cal_points(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    uint8_t points = auto_cal.cal_total_points;
+    
+    memcpy(ack_data, &points, sizeof(points));
+    *len = sizeof(points);
+}
+void slave_enter_cal_st(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    enter_auto_cal_ui();
+}
+void query_cal_point_inf(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    CAL_POINT_INF inf;
+    uint8_t *t_mode = NULL;
+    uint8_t *t_point = NULL;
+    uint8_t index = 0;
+    
+    memcpy(&index, data, sizeof(index));
+    
+    inf.index = index;
+    t_mode = get_cal_point_mode(index);
+    t_point = get_cal_point_name(index);
+    memcpy(inf.mode, t_mode, sizeof(inf.mode));
+    memcpy(inf.point, t_point, sizeof(inf.point));
+    
+    memcpy(ack_data, &inf, sizeof(inf));
+    *len = sizeof(inf);
 }
 
 /**
@@ -127,6 +161,15 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
             break;
         case SET_MODULE_NUM:
             set_module_num(frame->data, ack_frame->data, &frame_len);
+            break;
+        case GET_MODULE_CAL_POINTS:
+            get_module_cal_points(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_ENTER_CAL_ST:
+            slave_enter_cal_st(frame->data, ack_frame->data, &frame_len);
+            break;
+        case QUERY_CAL_POINT_INF:
+            query_cal_point_inf(frame->data, ack_frame->data, &frame_len);
             break;
         default:
             ack_frame->st = COMM_ST_UNDEFINED;

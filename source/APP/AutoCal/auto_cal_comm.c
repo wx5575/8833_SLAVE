@@ -46,6 +46,18 @@ uint8_t *get_cur_point_mode(void)
 	
 	return cal_mode_pool[n][0];
 }
+
+uint8_t *get_cal_point_mode(uint8_t index)
+{
+	uint8_t n = cal_order[index].type;
+	
+	return cal_mode_pool[n][1];
+}
+uint8_t *get_cal_point_name(uint8_t index)
+{
+    return cal_order[index].name;
+}
+
 uint8_t *get_cur_point_range(uint8_t *buf)
 {
 	sprintf((char*)buf, "%d", cal_order[g_cur_cal_opt_num].range);

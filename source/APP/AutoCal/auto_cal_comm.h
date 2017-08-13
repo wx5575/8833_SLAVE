@@ -26,7 +26,9 @@ typedef enum{
 void enter_auto_cal_ui(void);
 void exit_auto_cal_ui(void);
 uint8_t *get_cur_point_mode(void);
+uint8_t *get_cal_point_mode(uint8_t index);
 void get_auto_cal_status(uint16_t*data);
+uint8_t *get_cal_point_name(uint8_t index);
 uint8_t *get_cur_point_range(uint8_t *buf);
 void auto_cal_start_output(void);
 void auto_cal_stop_output(void);

@@ -92,6 +92,12 @@ typedef struct{
 }FRAME_T;
 #pragma pack()
 
+typedef struct{
+    uint8_t index;///<索引值
+    uint8_t mode[10];///<校准点的模式
+    uint8_t point[10];///<校准点
+}CAL_POINT_INF;
+
 #ifdef   MODULE_GLOBALS
 #define  MODULE_EXT
 #else

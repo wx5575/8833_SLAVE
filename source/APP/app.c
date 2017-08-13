@@ -606,6 +606,10 @@ void exe_cur_status(EXE_STATUS_ENUM *exe_status)
             cursor_pos(-5,0);//将光标移出屏幕 防止光标残留位置会对界面显示造成
             break;
         case INTO_AUTO_CAL:
+            app_flag.calibration = 1;/* 进入校准模式 */
+            auto_calibration();//进入校准程序
+            app_flag.calibration = 0;/* 退出校准模式 */
+            *exe_status = RE_MAIN;/* 重绘主界面 */
             break;
         case INTO_SCAN_MODULES:
             break;

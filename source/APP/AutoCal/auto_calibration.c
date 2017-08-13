@@ -64,6 +64,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_200uA];
+                order[temp].name = ac_gear[AC_200uA].name;
                 order[temp++].data = AC_200uA;
             }
             if(temp_gear & _AC_2mA)
@@ -73,6 +74,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_2mA];
+                order[temp].name = ac_gear[AC_2mA].name;
                 order[temp++].data = AC_2mA;
             }
             if(temp_gear & _AC_10mA)
@@ -82,6 +84,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_10mA];
+                order[temp].name = ac_gear[AC_10mA].name;
                 order[temp++].data = AC_10mA;
             }
             if(temp_gear & _AC_20mA)
@@ -91,6 +94,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_20mA];
+                order[temp].name = ac_gear[AC_20mA].name;
                 order[temp++].data = AC_20mA;
             }
             if(temp_gear & _AC_50mA)
@@ -100,6 +104,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_50mA];
+                order[temp].name = ac_gear[AC_50mA].name;
                 order[temp++].data = AC_50mA;
             }
             if(temp_gear & _AC_100mA)
@@ -109,6 +114,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_100mA];
+                order[temp].name = ac_gear[AC_100mA].name;
                 order[temp++].data = AC_100mA;
             }
             if(temp_gear & _AC_200mA)
@@ -118,6 +124,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_AC_A;
                 order[temp].range = cur_rang[AC_200mA];
+                order[temp].name = ac_gear[AC_200mA].name;
                 order[temp++].data = AC_200mA;
             }
             
@@ -134,6 +141,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_2uA];
+                order[temp].name = dc_gear[DC_2uA].name;
                 order[temp++].data = DC_2uA;
             }
             if(temp_gear & _DC_20uA)
@@ -143,6 +151,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_20uA];
+                order[temp].name = dc_gear[DC_20uA].name;
                 order[temp++].data = DC_20uA;
             }
             if(temp_gear & _DC_200uA)
@@ -152,6 +161,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_200uA];
+                order[temp].name = dc_gear[DC_200uA].name;
                 order[temp++].data = DC_200uA;
             }
             if(temp_gear & _DC_2mA)
@@ -161,6 +171,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_2mA];
+                order[temp].name = dc_gear[DC_2mA].name;
                 order[temp++].data = DC_2mA;
             }
             if(temp_gear & _DC_10mA)
@@ -170,6 +181,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_10mA];
+                order[temp].name = dc_gear[DC_10mA].name;
                 order[temp++].data = DC_10mA;
             }
             if(temp_gear & _DC_20mA)
@@ -179,6 +191,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_20mA];
+                order[temp].name = dc_gear[DC_20mA].name;
                 order[temp++].data = DC_20mA;
             }
             if(temp_gear & _DC_50mA)
@@ -188,6 +201,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_50mA];
+                order[temp].name = dc_gear[DC_50mA].name;
                 order[temp++].data = DC_50mA;
             }
             if(temp_gear & _DC_100mA)
@@ -197,6 +211,7 @@ static void init_cal_cur_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
                 order[temp].mode = mode;
                 order[temp].type = AUTOCAL_DC_A;
                 order[temp].range = cur_rang[DC_100mA];
+                order[temp].name = dc_gear[DC_100mA].name;
                 order[temp++].data = DC_100mA;
             }
             break;
@@ -239,6 +254,7 @@ static void init_cal_vol_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
     void (*fun)(void) = NULL;
     uint8_t type = 0;
     uint32_t range[6];
+    uint8_t * point_name[6];
     
     if(mode == GR)
     {
@@ -258,19 +274,19 @@ static void init_cal_vol_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
             {
                 start_point = ACW_VOL_SEG_11;
                 type = AUTOCAL_AC_V;
-				get_acw_vol_cal_point_range(range);
+				get_acw_vol_cal_point_range(range, point_name);
             }
             else if(mode == DCW)
             {
                 start_point = DCW_VOL_SEG_11;
                 type = AUTOCAL_DC_V;
-				get_dcw_vol_cal_point_range(range);
+				get_dcw_vol_cal_point_range(range, point_name);
             }
             else if(mode == IR)
             {
                 start_point = IR_VOL_SEG_11;
                 type = AUTOCAL_DC_V;
-				get_ir_vol_cal_point_range(range);
+				get_ir_vol_cal_point_range(range, point_name);
             }
         }
         else
@@ -280,19 +296,19 @@ static void init_cal_vol_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
             {
                 start_point = ACW_VOL_SEG_21;
                 type = AUTOCAL_AC_V;
-				get_acw_vol_cal_point_range(range);
+				get_acw_vol_cal_point_range(range, point_name);
             }
             else if(mode == DCW)
             {
                 start_point = DCW_VOL_SEG_21;
                 type = AUTOCAL_DC_V;
-				get_dcw_vol_cal_point_range(range);
+				get_dcw_vol_cal_point_range(range, point_name);
             }
             else if(mode == IR)
             {
                 start_point = IR_VOL_SEG_21;
                 type = AUTOCAL_DC_V;
-				get_ir_vol_cal_point_range(range);
+				get_ir_vol_cal_point_range(range, point_name);
             }
         }
     }
@@ -304,12 +320,12 @@ static void init_cal_vol_order(uint8_t mode, CAL_ORDER* order, uint16_t *index)
         order[temp].data = i % 3;
         order[temp].mode = mode;
         order[temp].type = type;
+        order[temp].name = point_name[i];
         order[temp].range = range[i] * 10;//将电压单位转为0.1V
     }
     
     *index = temp;
 }
-
 
 /*
  * 函数名：init_cal_order
@@ -1424,7 +1440,7 @@ void auto_calibration(void)
     
     while(1)
     {
-		OSSemPend(ScheduleSem, 10, &err);
+//		OSSemPend(ScheduleSem, 10, &err);
         
 //         draw_frame_data(frame_buf);
         

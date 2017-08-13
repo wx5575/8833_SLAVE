@@ -171,6 +171,7 @@ typedef union{
 
 
 typedef struct{
+    uint8_t *name;///<校准点名称
     uint16_t num;/* 次序编号 */
     uint16_t type;/* 类型 */
     uint8_t mode;/* 测试模式 */
