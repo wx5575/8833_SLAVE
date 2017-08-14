@@ -1318,7 +1318,7 @@ static void auto_cal_vol_fun(void)
     transform_auto_cal_da_ad_to_string(g_auto_ele_info->ele_str[UI_ELE_DA], cal_info_un.vol.base[times].da);
     
     auto_cal.state = AUTOCAL_WAIT_DATA;/* 更新状态为这在等待校准数据 */
-    
+     
     while(1)
     {
         test_led_flash();
@@ -1337,8 +1337,8 @@ static void auto_cal_vol_fun(void)
 		/* 按下复位键时就要返回 */
 		if(0 == STOP_PIN)
 		{
-			stop_cal(mode);
-			return;
+//			stop_cal(mode);
+//			return;
 		}
         
         if(auto_cal.state == AUTOCAL_WAIT_OUTPUT)
@@ -1385,6 +1385,7 @@ void select_cur_range_pool(uint8_t mode)
 			break;
 	}
 }
+
 /*
  * 函数名：auto_calibration
  * 描述  ：自动校准入口函数
@@ -1449,28 +1450,37 @@ void auto_calibration(void)
             dis_cal_point_base_info();
         }
         
-        if(err == OS_ERR_NONE)
-        {
-            if(NULL != cal_order[g_cur_cal_opt_num].fun)
-            {
-                dis_cal_point_base_info();
-                cal_order[g_cur_cal_opt_num].fun();
-                auto_cal.state = AUTOCAL_CONNECTED;
-                if(g_cur_cal_opt_num + 1 == auto_cal.cal_total_points)
-                {
-                    auto_cal_pass();
-                    BUZZER = BUZZER_ON;
-                    OSTimeDlyHMSM(0,0,0,500);
-                    BUZZER = BUZZER_OFF;
-                    flag = 1;
-                }
-//                 clear_ui_ele();
-            }
-        }
         
         if(auto_cal.state == AUTOCAL_OUTPUTING)
         {
-            OSSemPost(ScheduleSem);
+            if(NULL != cal_order[g_cur_cal_opt_num].fun)
+            {
+                cal_order[g_cur_cal_opt_num].fun();
+            }
+        }
+        
+//        if(err == OS_ERR_NONE)
+//        {
+//            if(NULL != cal_order[g_cur_cal_opt_num].fun)
+//            {
+//                dis_cal_point_base_info();
+//                cal_order[g_cur_cal_opt_num].fun();
+//                auto_cal.state = AUTOCAL_CONNECTED;
+//                if(g_cur_cal_opt_num + 1 == auto_cal.cal_total_points)
+//                {
+//                    auto_cal_pass();
+//                    BUZZER = BUZZER_ON;
+//                    OSTimeDlyHMSM(0,0,0,500);
+//                    BUZZER = BUZZER_OFF;
+//                    flag = 1;
+//                }
+////                 clear_ui_ele();
+//            }
+//        }
+        
+        if(auto_cal.state == AUTOCAL_OUTPUTING)
+        {
+//            OSSemPost(ScheduleSem);
             if(flag == 1)
             {
                 flag = 0;
@@ -1495,7 +1505,7 @@ void auto_calibration(void)
 			case KEY_F4:
                 return;
             case KEY_ENTER:
-                OSSemPost(ScheduleSem);
+//                OSSemPost(ScheduleSem);
                 if(flag == 1)
                 {
                     flag = 0;

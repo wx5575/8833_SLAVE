@@ -1450,7 +1450,7 @@ void serve_test(void)
 		/* 按下复位键后 显示等待测试见面 可能由通信控制 */
 		if(RESET == STOP_PIN || TERMINATE/* && CUR_OVER*/)
 		{
-            test_state = TEST_RESET_UI;
+//            test_state = TEST_RESET_UI;
 		}
         
         /* 上位机更新了数据需要刷新显示 */
@@ -1461,7 +1461,8 @@ void serve_test(void)
 		}
         
         /* 从按键缓冲取键值 */
-		pkey_value = OSQPend(KeyboardQSem,2,&err);
+//		pkey_value = OSQPend(KeyboardQSem,2,&err);
+		pkey_value = OSQAccept(KeyboardQSem, &err);
         
         if(pkey_value == NULL)
         {

@@ -10,6 +10,7 @@
 #define MODULE_GLOBALS
 #include "module_manage.h"
 #include "string.h"
+#include "stdio.h"
 #include "crc.h"
 #include "USART3.H"
 #include "Timer5_Config.h"
@@ -24,9 +25,17 @@ enum{
     SET_MODULE_NUM,///<设置模块的编号，对于多路同步测试仪要告诉每个模块在系统中的编号,用这个编号来判断 \
                     是否参与测试工作
     
-    SLAVE_ENTER_CAL_ST = 50,///<从机进入校准状态
-    GET_MODULE_CAL_POINTS = 58,///<获取模块的校准总个数
-    QUERY_CAL_POINT_INF = 60,///<查询校准点信息
+    SLAVE_ENTER_CAL_ST      = 50,///<从机进入校准状态
+    SLAVE_EXIT_CAL_ST       = 51,///<退出校准状态
+    SLAVE_CAL_ST            = 52,///<校准状态查询
+    SLAVE_CAL_MODE          = 53,///<校准模式查询
+    SLAVE_CAL_POINT_RANGE   = 54,///<当前校准点量程查询
+    SLAVE_CAL_START         = 55,///<启动校准输出
+    SLAVE_CAL_STOP          = 56,///<停止校准输出
+    SLAVE_CAL_MEASURE_VALUE = 57,///<设置校准测量值
+    GET_MODULE_CAL_POINTS   = 58,///<获取模块的校准总个数
+    LOAD_CAL_POINT          = 59,///<加载校准点作为当前校准点
+    QUERY_CAL_POINT_INF     = 60,///<查询校准点信息
 };
 
 MODULE_INF module=
@@ -67,10 +76,63 @@ void get_module_cal_points(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     memcpy(ack_data, &points, sizeof(points));
     *len = sizeof(points);
 }
+
+
 void slave_enter_cal_st(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     enter_auto_cal_ui();
 }
+void slave_exit_cal_st(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    exit_auto_cal_ui();
+}
+
+
+void slave_cal_st(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    get_auto_cal_status((void*)ack_data);
+    *len = strlen((const char*)ack_data);
+}
+
+void slave_cal_mode(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    strcpy((char*)ack_data, (const char*)get_cur_point_mode());
+    *len = strlen((const char*)ack_data);
+}
+void slave_cal_point_range(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+	sprintf((char*)ack_data, "%d", cal_order[g_cur_cal_opt_num].range);
+    *len = strlen((const char*)ack_data);
+}
+
+
+void slave_cal_start(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    auto_cal_start_output();
+}
+
+
+void slave_cal_stop(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    auto_cal_stop_output();
+}
+
+void load_cal_point(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    uint8_t point = 0;
+    
+    memcpy(&point, data, sizeof(point));
+    load_auto_cal_point(point);
+}
+
+void slave_cal_measure_value(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    uint64_t measure;
+    
+    memcpy(&measure, data, sizeof(measure));
+    set_auto_cal_measure(measure);
+}
+
 void query_cal_point_inf(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     CAL_POINT_INF inf;
@@ -170,6 +232,30 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
             break;
         case QUERY_CAL_POINT_INF:
             query_cal_point_inf(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_EXIT_CAL_ST:
+            slave_exit_cal_st(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_ST:
+            slave_cal_st(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_MODE:
+            slave_cal_mode(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_POINT_RANGE:
+            slave_cal_point_range(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_START:
+            slave_cal_start(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_STOP:
+            slave_cal_stop(frame->data, ack_frame->data, &frame_len);
+            break;
+        case LOAD_CAL_POINT:
+            load_cal_point(frame->data, ack_frame->data, &frame_len);
+            break;
+        case SLAVE_CAL_MEASURE_VALUE:
+            slave_cal_measure_value(frame->data, ack_frame->data, &frame_len);
             break;
         default:
             ack_frame->st = COMM_ST_UNDEFINED;

@@ -896,7 +896,7 @@ void get_acw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
 	for(i = 0; i < 3; i++)
 	{
 		range[b + i] = acw_vol_cal[type_spe.amp_type][1].point_da[type_spe.acw_vol_range][i][1];
-        name_pool[b + i] = acw_vol_cal[type_spe.amp_type][0].point_menu[type_spe.acw_vol_range][i][1];
+        name_pool[b + i] = acw_vol_cal[type_spe.amp_type][1].point_menu[type_spe.acw_vol_range][i][1];
 	}
 }
 
@@ -910,6 +910,7 @@ void get_dcw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
 		for(i = 0; i < 3; i++)
 		{
 			range[i] = dcw_vol_cal[type_spe.amp_type][0].point_da[type_spe.dcw_vol_range][b + i][1];
+            name_pool[b + i] = dcw_vol_cal[type_spe.amp_type][0].point_menu[type_spe.dcw_vol_range][i][1];
 		}
 		
 		b = 3;
@@ -918,6 +919,7 @@ void get_dcw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
 	for(i = 0; i < 3; i++)
 	{
 		range[b + i] = dcw_vol_cal[type_spe.amp_type][1].point_da[type_spe.dcw_vol_range][i][1];
+        name_pool[b + i] = dcw_vol_cal[type_spe.amp_type][1].point_menu[type_spe.dcw_vol_range][i][1];
 	}
 }
 void get_ir_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
