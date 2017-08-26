@@ -497,6 +497,7 @@ extern uint8_t get_acw_max_gear(void);
 extern uint8_t get_cc_max_gear(void);
 extern uint8_t get_dcw_max_gear(void);
 extern int32_t check_gr_mode(void);
+extern void init_other_speciality(void);
 
 #endif //__TYPE_SELECT__
 

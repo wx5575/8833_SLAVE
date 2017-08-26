@@ -182,6 +182,7 @@ void confirm_vol_segment_s(void);
 void get_acw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[]);
 void get_dcw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[]);
 void get_ir_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[]);
+void get_gr_cur_cal_point_range(uint32_t *range, uint8_t *name_pool[]);
 
 #endif //__CALIBRATION_H__
  /******************* (C) COPYRIGHT 2014 ³¤Ê¢ÒÇÆ÷ *****END OF FILE****/

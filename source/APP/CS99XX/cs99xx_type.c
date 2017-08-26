@@ -22,8 +22,8 @@ static void init_speciality(void);
 #include    "cs99xx_type_config.h"
 #include	"calibration.h"
 
-#define __TEST			0
-#define __TEST_TYPE		CS9929AX_CC//CS9929AX_CC //CS9927LB//TSK7630//CS9933ET_1//CS9922BX//CS9922BX_DZ//CS9917A_8//CS9950CX //CS9917CX_20//
+#define __TEST			1
+#define __TEST_TYPE		CS9912BX//CS9929AX_CC //CS9927LB//TSK7630//CS9933ET_1//CS9922BX//CS9922BX_DZ//CS9917A_8//CS9950CX //CS9917CX_20//
 
 #define VERSION_NUMBER__    "2.20.73"	/* 版本号 */
 
@@ -563,11 +563,11 @@ void init_other_speciality(void)
         type_spe.vol_is_segment = VOL_SEGMENT_NO;
     }
     
-    judge_amp_type();
-    judge_u_leading_data_sw();
-    
-    judge_support_g_mode();/* G模式支持判断 */
-    judge_single_gr();/* 单gr判断 */
+//    judge_amp_type();
+//    judge_u_leading_data_sw();
+//    
+//    judge_support_g_mode();/* G模式支持判断 */
+//    judge_single_gr();/* 单gr判断 */
 }
 
 

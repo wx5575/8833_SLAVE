@@ -2,6 +2,7 @@
 #ifndef __AUTO_CALIBRATION_H__
 #define __AUTO_CALIBRATION_H__
 
+#include "cs99xx_struct.h"
 
 #ifndef NULL
 #define NULL 0
@@ -179,6 +180,10 @@ typedef struct{
     uint32_t data;/* 用户数据 */
     uint32_t range;/* 数据范围 */
     void (*get_cal_info)(CAL_BASE_INFO *info);/* 获取校准点信息 */
+    CS_UNIT_ENUM unit;///<单位
+    uint8_t decs;///<小数点个数
+    uint8_t lon;///<总长度包含小数点
+    uint32_t mul_power;///<倍率 例如:电压单位0.1V 倍率就为10
 }CAL_ORDER;
 
 typedef struct{

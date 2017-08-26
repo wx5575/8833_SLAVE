@@ -148,7 +148,7 @@ void  bsp_init(void)
     
 	systick_init();		/* ‡÷‡™ ±÷”≈‰÷√ */
     
-    usart3_config(115200);
+    usart3_config(115200 * 2);
 }
 
 /*

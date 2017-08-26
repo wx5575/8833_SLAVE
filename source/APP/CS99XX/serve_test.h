@@ -170,6 +170,7 @@ typedef enum{
 #define ARC_INT(s)		(s == ENABLE? (EXTI_LINE11_ENABLE = 1):(EXTI_LINE11_ENABLE =0))     /* 电弧异常中断开关	*/
 #define STOP_INT(s)		(s == ENABLE? (EXTI_LINE5_ENABLE = 1):(EXTI_LINE5_ENABLE =0))       /* 复位异常中断开关	*/
 #define GFI_INT(s)		(s == ENABLE? (EXTI_LINE12_ENABLE = 1):(EXTI_LINE12_ENABLE = 0))    /* GFI 异常中断开关 */
+#define START_INT(s)    (s == ENABLE? (EXTI_LINE6_ENABLE = 1):(EXTI_LINE6_ENABLE =0))       /* 启动中断开关	*/
 
 #define RTC_INI(s)      (s == ENABLE? (RTC_INI_ENABLE = 1):(RTC_INI_ENABLE = 0))            /* RTC 中断开关 */
 
@@ -414,6 +415,11 @@ _SERVE_TEST uint8_t cur_offset_result;   /* 当前步的偏移结果 */
 _SERVE_TEST uint8_t cur_getc_result;     /* 当前步的获取电容结果 */
 _SERVE_TEST uint8_t cur_t_time;          /* 测试时间 */
 _SERVE_TEST uint8_t cur_status;          /* 当前状态 */
+
+_SERVE_TEST CS_UNIT_ENUM cur_vol_unit;        /* 当前电压单位 */
+_SERVE_TEST CS_UNIT_ENUM cur_cur_unit;        /* 当前电流单位 */
+_SERVE_TEST CS_UNIT_ENUM cur_real_unit;       /* 当前真实电流单位 */
+
 _SERVE_TEST uint8_t cur_cylinder_ctrl_status;          /* 当前气缸控制状态定制机专用 */
 _SERVE_TEST uint8_t cur_status_plc;      /* 当前状态 */
 _SERVE_TEST uint8_t cur_plc_err_st;		 /* PLC报警状态 */
@@ -458,6 +464,8 @@ _SERVE_TEST uint16_t cur_arc_gear;       /* 当前电弧等级 或电流模式下的电流 */
 _SERVE_TEST uint16_t cur_frequency_gear; /* 输出频率档位选择 1-9 */
 _SERVE_TEST uint16_t cur_frequency;      /* 输出频率 */
 _SERVE_TEST TEST_PORT cur_port;          /* 当前的端口 */
+_SERVE_TEST WORK_PORT cur_work_port;     /* 当前的工作端口 */
+_SERVE_TEST uint8_t cur_work_st;         /* 当前的工作端口状态 */
 _SERVE_TEST uint8_t cur_auto;            /* 当前ir 自动换挡 */
 
 _SERVE_TEST int8_t steps_con;	         /* 步间连续 */
@@ -549,6 +557,7 @@ extern void vol_change_1000hz(uint32_t time);
 extern uint8_t get_gr_gear(void);
 extern void load_ratio(uint8_t mode);
 extern void load_data(void);//test_ready
+extern void get_dis_par_unit(uint8_t mode);
 extern void cs99xx_big_cap_test(void);
 extern void cs99xx_test(void);
 extern void cs99xx_g_test(void);

@@ -38,6 +38,7 @@
 #define GPIOG_IDR_Addr    (GPIOG_BASE+8) //0x40011E08
 
 #define EXTI_LINE5_ENABLE       BIT_ADDR(EXTI_BASE, 5)	/* 复位中断 */
+#define EXTI_LINE6_ENABLE       BIT_ADDR(EXTI_BASE, 6)	/* 复位中断 */
 // #define EXTI_LINE9_ENABLE    BIT_ADDR(EXTI_BASE, 9)	/* 功放中断 */
 #define EXTI_LINE10_ENABLE      BIT_ADDR(EXTI_BASE, 10)	/* 短路中断 */
 #define EXTI_LINE11_ENABLE      BIT_ADDR(EXTI_BASE, 11)	/* ARC中断 */
@@ -83,6 +84,10 @@
 #define ROW1	    (PBout(2))
 
 #define BUZZER	    (PBout(1))
+
+#define TEST_OVER_N     0   //测试未结束
+#define TEST_OVER_Y     1   //测试结束
+#define TEST_0VER   (PFout(1))
 
 #define	BUZZER_OFF	(0)
 #define BUZZER_ON	(1)

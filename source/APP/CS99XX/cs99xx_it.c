@@ -40,7 +40,7 @@ void init_exit(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 			 //上拉输入
 	
 	/* STOP按键，AMP,SHORT,ARC,GFI输入引脚配置 */
-	GPIO_InitStructure.GPIO_Pin		= GPIO_Pin_5 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Pin		= GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	/**************** 中断向量设置 ****************/
@@ -48,7 +48,7 @@ void init_exit(void)
 	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;              //启动此通道的中断
 	
 	/*************** 外部中断优先级配置 ************/
-	/* STOP--KEY PA6  AMP PA9 */
+	/* STOP--KEY PA5  AMP PA9 */
 	NVIC_InitStructure.NVIC_IRQChannel=(EXTI9_5_IRQn);
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority=STOP_IT_SUB_PRIO;
 	NVIC_Init(&NVIC_InitStructure);
@@ -68,6 +68,9 @@ void init_exit(void)
 	EXTI_InitStructure.EXTI_Line = EXTI_Line5;//将以上入口放在EXTI_Line5这条线上
 	EXTI_Init(&EXTI_InitStructure);
 	
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource6);  //管脚选择
+	EXTI_InitStructure.EXTI_Line = EXTI_Line6;//将以上入口放在EXTI_Line5这条线上
+	EXTI_Init(&EXTI_InitStructure);
 	/* Place protection exti lines */
 	/* PA9功放报警改用查询的方法 */
 	// 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource9);  //管脚选择
@@ -87,6 +90,7 @@ void init_exit(void)
 	EXTI_Init(&EXTI_InitStructure);
 	
 	/* 关中断 */
+    START_INT(ENABLE);// 启动中断
 	STOP_INT(DISABLE);	/* 复位中断 */
 	SHORT_INT(DISABLE);	/* 短路中断 */
 	GFI_INT(DISABLE);	/* GFI 中断 */

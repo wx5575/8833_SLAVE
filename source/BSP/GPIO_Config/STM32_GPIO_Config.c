@@ -68,6 +68,23 @@ void GPIO_Configuration(void)
 	
 	BUZZER = BUZZER_OFF;/* 蜂鸣器 */
 	
+    
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 			 //推挽输出
+    
+    /* 测试完成信号 */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_Init(GPIOF, &GPIO_InitStructure);
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	return;
 }
 

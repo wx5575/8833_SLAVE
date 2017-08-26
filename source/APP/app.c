@@ -527,7 +527,7 @@ void create_other_task(void)
 // 					(void*)0,
 // 					OS_TASK_OPT_STK_CHK| OS_TASK_OPT_STK_CLR
 // 					));
-    /* MODBUS主机发送任务 */
+//    /* MODBUS主机发送任务 */
 // 	while(OS_ERR_NONE != OSTaskCreateExt(modbus_master_send_task,
 // 					(void*)0,
 // 					&Modbus_Master_Send_STK[MODBUS_MASTER_SEND_STK_SIZE-1],

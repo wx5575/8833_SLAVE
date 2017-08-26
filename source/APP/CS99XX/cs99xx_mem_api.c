@@ -1224,21 +1224,21 @@ int32_t read_paramenter(void)
     read_sys_par();/* 加载系统参数 */
     check_sys_par();/* 检查系统参数 */
     
-	if(get_cal_pin() && (KEY_ENTER != scan_keyboard()))
-	{
-		BUZZER = BUZZER_ON;
-		cal_warning();
-		while(1);
-	}
+//	if(get_cal_pin() && (KEY_ENTER != scan_keyboard()))
+//	{
+//		BUZZER = BUZZER_ON;
+//		cal_warning();
+//		while(1);
+//	}
 	
-	LED_ALL = LED_ON;
-    if(BUZZER_EN)
-    {
-        BUZZER_SOUND(300);/* 开机蜂鸣300ms */
-    }
-    
-	OSTimeDlyHMSM(0,0,0,200);/* 让灯亮一会儿 让子弹飞一会儿 */
-    LED_ALL = LED_OFF;
+//	LED_ALL = LED_ON;
+//    if(BUZZER_EN)
+//    {
+//        BUZZER_SOUND(300);/* 开机蜂鸣300ms */
+//    }
+//    
+//	OSTimeDlyHMSM(0,0,0,200);/* 让灯亮一会儿 让子弹飞一会儿 */
+//    LED_ALL = LED_OFF;
     
     
 	err = read_ratio();/* 读校准系数 */
@@ -1281,30 +1281,30 @@ int32_t read_paramenter(void)
 	gui_draw_build_connect_to_board();
 	
     /* 开机自检 */
-    {
-        uint8_t flag = 1;
-        uint32_t count = 0;
-        
-        while((app_flag.power_check & 0xf0) != 0xf0) //app_flag
-        {
-            /* 通信超时 */
-            OSTimeDlyHMSM(0,0,0,100);
-            if(++count > 40)// 0X1FFFFF)
-            {
-                gui_draw_build_connect_fail();
-                flag = 0;/* 通信失败跳过自检程序 */
-                break;
-            }
-        }
-        
-        if(flag)
-        {
-            if(sys_par.is_self_check)
-            {
-                gui_draw_self_check();
-            }
-        }
-    }
+//    {
+//        uint8_t flag = 1;
+//        uint32_t count = 0;
+//        
+//        while((app_flag.power_check & 0xf0) != 0xf0) //app_flag
+//        {
+//            /* 通信超时 */
+//            OSTimeDlyHMSM(0,0,0,100);
+//            if(++count > 40)// 0X1FFFFF)
+//            {
+//                gui_draw_build_connect_fail();
+//                flag = 0;/* 通信失败跳过自检程序 */
+//                break;
+//            }
+//        }
+//        
+//        if(flag)
+//        {
+//            if(sys_par.is_self_check)
+//            {
+//                gui_draw_self_check();
+//            }
+//        }
+//    }
     
     /* 当系统初始化标志不为1时就执行以下初始化操作 */
 	if(sys_flag.mem_init != 1)
@@ -1344,14 +1344,14 @@ int32_t read_paramenter(void)
 // 		
 //         save_sys_flag();
         
-		while(1)
-		{
-            /* 如果数据出错就按下复位键就进入主界面 此时要马上重启 */
-			if(!STOP_PIN)
-			{
-				return err;
-			}
-		}
+//		while(1)
+//		{
+//            /* 如果数据出错就按下复位键就进入主界面 此时要马上重启 */
+//			if(!STOP_PIN)
+//			{
+//				return err;
+//			}
+//		}
 	}
 	
 	g_cur_step = list_99xx.head;	/* 加载当前步 */

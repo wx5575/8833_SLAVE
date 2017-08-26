@@ -899,6 +899,22 @@ void get_acw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
         name_pool[b + i] = acw_vol_cal[type_spe.amp_type][1].point_menu[type_spe.acw_vol_range][i][1];
 	}
 }
+void get_gr_cur_cal_point_range(uint32_t *range, uint8_t *name_pool[])
+{
+	uint32_t i = 0;
+	uint32_t b = 0;
+	
+    if(DC_GR_EN == ENABLE)
+    {
+        b = 1;
+    }
+    
+	for(i = 0; i < 3; i++)
+	{
+		range[i] = gr_cur_cal[b].point_da[type_spe.gr_amp_type][i][0];
+        name_pool[i] = gr_cur_cal[b].point_menu[type_spe.gr_amp_type][i][0];
+	}
+}
 
 void get_dcw_vol_cal_point_range(uint32_t *range, uint8_t *name_pool[])
 {

@@ -68,6 +68,27 @@ void stop_irq(void)
     BUZZER = BUZZER_OFF;/* 关闭蜂鸣 */
     LED_FAIL = LED_OFF;/* 关闭LED_FAIL灯 */
 }
+#include "keyboard.h"
+void start_irq(void)
+{
+    static uint16_t g_key_val = KEY_START;
+    
+    cur_work_st = get_cur_port_work_st(&cur_work_port);
+    
+    OSQPost(KeyboardQSem, &g_key_val);
+    
+    if(cur_work_st == 0)
+    {
+        NEXT = 1;
+        return;
+    }
+    
+	open_sine(cur_frequency);
+    
+    test_flag.start_comm = 1;
+    cur_status = ST_TESTING;
+    TEST_0VER = TEST_OVER_N;//清除测试结束
+}
 /*
  * 函数名：short_irq
  * 描述  ：短路中断服务程序

@@ -77,7 +77,7 @@ void usart3_config(uint32_t baud_rate)
     USART_Cmd(USART3, ENABLE); //使能 USART3
     
     NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn; //嵌套通道为USART3_IRQn
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //抢占优先级为 0
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; //抢占优先级为 0
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;    //响应优先级为 0
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;     //通道中断使能
     NVIC_Init(&NVIC_InitStructure);
@@ -94,7 +94,7 @@ void usart3_send_data(uint8_t *data, uint32_t len)
     send_count = len;
 	send_buf_bak = send_buf;/* 发送缓冲区备份 以备重发使用 */
 	send_count_bak = send_count;/* 发送数据计数 以备重发使用 */
-    USART_ITConfig(UART_PORT, USART_IT_RXNE, DISABLE);
+//    USART_ITConfig(UART_PORT, USART_IT_RXNE, DISABLE);
     USART_ITConfig(UART_PORT, USART_IT_TC, ENABLE);
 }
 /**

@@ -14,6 +14,7 @@
 void gfi_cycle_clear_count(void);
 
 
+void start_irq(void);
 void stop_irq(void);
 void arc_irq(void);
 void short_irq(void);

@@ -642,7 +642,7 @@ int16_t set_mode_for_comm(const uint16_t test_mode)
     uint8_t mode = getTestMode_f(test_mode);
 	
 	define_modes(mode_buf, flag, &kinds);/* 获取当前机型的模式信息 */
-
+    
 	for(i = 1; i <= kinds; i++)
 	{
 		if(flag[i] == mode)

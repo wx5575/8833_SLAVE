@@ -569,12 +569,12 @@ void bsp_keyboard_init(void)
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
 	/************************* 配置启动按键 *************************/
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;//上拉输入
-	
-	/************* 配置PA6为输入，START按键 **************/
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;//上拉输入
+//	
+//	/************* 配置PA6为输入，START按键 **************/
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+//	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 void init_keyboard(void)

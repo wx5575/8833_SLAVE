@@ -82,6 +82,10 @@ typedef struct{
     COM_STRUCT *com;
 }SYN_TEST_PORT_INF;
 
+typedef enum{
+    CS_FALSE,
+    CS_TRUE,
+}CS_BOOL;
 
 #pragma pack(1)
 typedef struct{
@@ -96,7 +100,24 @@ typedef struct{
     uint8_t index;///<索引值
     uint8_t mode[10];///<校准点的模式
     uint8_t point[10];///<校准点
+    CS_UNIT_ENUM unit;///<单位
+    uint8_t decs;///<小数点个数
+    uint8_t lon;///<总长度包含小数点
+    uint32_t mul_power;///<倍率 例如:电压单位0.1V 倍率就为10
 }CAL_POINT_INF;
+
+typedef struct{
+    uint8_t work_st;///<工作状态，0不参与工作，1参与工作
+    uint8_t vol[10];///<电压值
+    uint8_t cur[10];///<电流值
+    uint8_t time[10];///<时间
+    uint8_t status;///<测试状态
+    uint8_t mode[5];///<测试模式
+    uint8_t step[8];///<测试步骤
+    CS_UNIT_ENUM vol_unit;///<电压单位
+    CS_UNIT_ENUM cur_unit;///<电流/电阻单位
+    CS_UNIT_ENUM real_unit;///<真实电流等单位
+}COMM_TEST_DATA;
 
 #ifdef   MODULE_GLOBALS
 #define  MODULE_EXT

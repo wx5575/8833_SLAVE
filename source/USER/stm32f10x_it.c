@@ -187,6 +187,15 @@ void EXTI9_5_IRQHandler(void)
 		}
 		EXTI_ClearFlag(EXTI_Line5);
 	}
+	if(EXTI_GetITStatus(EXTI_Line6) != RESET)/* 复位按键中断 */
+	{
+		soft_delay_10us(SOFT_DELAY_STOP);
+		if(START_PIN == 0)
+		{
+			start_irq();
+		}
+		EXTI_ClearFlag(EXTI_Line5);
+	}
     /* 出现异常情况清除所有的中断标志,防止死机 */
     {
         EXTI_ClearFlag(EXTI_Line5);

@@ -46,10 +46,10 @@ TEST_FILE default_file =
 	"DEFAULT",/* name */
 // 	"????????",/* 被测品名 */
 	N_MODE,	/* 工作模式为N，正常模式 */
-	0,	/* pass信号保持时间 1s */
-	10,	/* pass蜂鸣器保持时间 1s */
-	ARC_CUR_MODEL,	/* 电弧侦测为电流模式 */
 	1,	//文件中设置了多少步
+	10,	/* pass蜂鸣器保持时间 1s */
+	0,	/* pass信号保持时间 1s */
+	ARC_CUR_MODEL,	/* 电弧侦测为电流模式 */
     0,
 };
 

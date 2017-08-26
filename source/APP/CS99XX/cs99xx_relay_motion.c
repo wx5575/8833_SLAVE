@@ -186,11 +186,13 @@ void test_ready(void)
 	updata_port(&cur_port);/* 更新端口状态 */
 	relay_motion();/* 继电器动作 */
     amp_relay_ctrl_on();/* 功放继电器 */
-    OSTimeDlyHMSM(0, 0, 0, 10);
-	wait_dc_gr_send_task_idle();
+//    OSTimeDlyHMSM(0, 0, 0, 10);
+    soft_delay_us(10);
 	
     if(cur_mode == GR && DC_GR_EN)
     {
+        wait_dc_gr_send_task_idle();
+        
         if(-1 == ask_dc_gr_start_ok())
         {
             STOP = 1;

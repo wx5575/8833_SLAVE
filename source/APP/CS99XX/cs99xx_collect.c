@@ -536,6 +536,7 @@ void count_dis_value(void)
  */
 static uint8_t judge_vol_exception(void)
 {
+        return ERR_NONE;
     if(g_dis_time >= 5 || g_dis_time == tes_t)
     {
 		/* ต็ันตอำฺ1V */

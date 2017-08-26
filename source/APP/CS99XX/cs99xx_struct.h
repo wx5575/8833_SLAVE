@@ -38,8 +38,8 @@ enum{
 	CHINESE = 1,            /* 汉语 */
 	ENGLISH = 0,            /* 英语 */
 	
-	G_MODE = 0,             /* 工作模式 G模式 */
-	N_MODE = 1,             /* 工作模式 N模式 */
+//	G_MODE = 0,             /* 工作模式 G模式 */
+//	N_MODE = 1,             /* 工作模式 N模式 */
 	
 	ARC_CUR_MODEL 	= 0,    /* 电流模式 */
 	ARC_GRADE_MODEL = 1,    /* 等级模式 */
@@ -86,9 +86,22 @@ typedef struct{
     uint8_t mode;/* 通信时使用 */
 }TEST_PORT;
 
+/**
+  * @brief  工作端口结构定义，针对多路同步测试设计，用来指定模块是否参与工作
+  */
+typedef struct{
+    _TEST_PORT ports[TEST_PORTS_MAX / 8];
+    uint8_t num;
+    uint8_t mode;/* 通信时使用 */
+}WORK_PORT;
+/**
+  * @brief  步骤编号
+  */
+typedef uint16_t STEP_NUM;
+
 /* ACW参数 */
 typedef struct {
-	uint16_t 	step;                       /* 测试步 */
+	STEP_NUM 	step;                       /* 测试步 */
 	uint8_t 	mode;                       /* 模式 */
 	uint16_t 	testing_voltage;            /* 测试电压 */
 	uint8_t 	gear_i;                     /* 电流档位  200uA   2mA   20mA   10mA   100mA */
@@ -104,6 +117,7 @@ typedef struct {
 	uint8_t 	steps_pass;					/* 步间pass */
 	uint8_t 	steps_cont;					/* 步间连续 */
 	TEST_PORT	port;                       /* 端口 */
+	WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
 	
 	uint16_t	offset_cur;                 /* 偏移电流 */
 	uint16_t 	offset_real;                /* 偏移真实电流 */
@@ -112,7 +126,7 @@ typedef struct {
 
 /* CC参数 */
 typedef struct {
-	uint16_t 	step;                       /* 测试步 */
+	STEP_NUM 	step;                       /* 测试步 */
 	uint8_t 	mode;                       /* 模式 */
 	uint16_t 	testing_voltage;            /* 测试电压 */
 	uint8_t 	gear_i;                     /* 电流档位  200uA   2mA   20mA   10mA   100mA */
@@ -128,6 +142,7 @@ typedef struct {
 	uint8_t 	steps_pass;         		/* 步间pass */
 	uint8_t 	steps_cont; 				/* 步间连续 */
 	TEST_PORT	port;                       /* 端口 */
+	WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
 	
 	uint16_t	offset_cur;                 /* 偏移电流 */
 	uint16_t 	offset_real;                /* 偏移真实电流 */
@@ -136,7 +151,7 @@ typedef struct {
 
 /* DCW 的参数 */
 typedef struct {
-	uint16_t     step;                      /* 测试步 */
+	STEP_NUM     step;                      /* 测试步 */
 	uint8_t     mode;                       /* 测试步 */
 	uint16_t 	testing_voltage;            /* 测试电压 */
 	uint8_t 	gear_i;                     /* 电流档位   2uA ,  20uA , 200uA ,  2mA,   10mA */
@@ -154,6 +169,7 @@ typedef struct {
 	uint8_t 	steps_pass;         		/* 步间pass */
 	uint8_t		steps_cont; 				/* 步间连续 */
 	TEST_PORT	port;                       /* 端口 */
+	WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
 	
 	uint16_t	offset_cur;                 /* 偏移电流 */
 	uint8_t 	offset_result;              /* 偏移电流测量结果 OFFSET_PASS OFFSET_FAIL OFFSET_NONE */
@@ -161,7 +177,7 @@ typedef struct {
 
 /* IR 参数 */
 typedef struct {
-	uint16_t 	step;                       /* 测试步 */
+	STEP_NUM 	step;                       /* 测试步 */
 	uint8_t 	mode;                       /* 模式 */
 	uint16_t 	testing_voltage;			/* 输出电压 */
 	uint8_t 	auto_shift_gears;           /* 自动换挡 */
@@ -174,11 +190,13 @@ typedef struct {
 	uint8_t 	steps_pass;	        		/* 步间pass */
 	uint8_t 	steps_cont;					/* 步间连续 */
 	TEST_PORT	port;	                    /* 端口 */
+    WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
+	
 }IR_STRUCT;
 
 /* GR参数 */
 typedef struct {
-	uint16_t 	step;
+	STEP_NUM 	step;
 	uint8_t 	mode;
 	uint8_t		voltage_gear;               /* 电压档位 1 20mv 2 200mv 3 2000mv */
 	uint16_t	testing_cur;                /* 输出电流 */
@@ -190,6 +208,7 @@ typedef struct {
 	uint8_t 	steps_cont; 				/* 步间连续 */
 	uint16_t	output_freq;				/* 输出频率 */
 	uint16_t	test_method;                /* 当脉冲测试模式使能了以后 0表示脉冲测试 1表示连续测试 */
+	WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
 	
 	uint16_t	offset_res;                 /* 偏移电阻 */
 	uint8_t	    offset_result;              /* 偏移电流测量结果 OFFSET_PASS OFFSET_FAIL OFFSET_NONE */
@@ -197,7 +216,7 @@ typedef struct {
 
 /* BBD参数 */
 typedef struct {
-	uint16_t 	step;                       /* 设置步 */
+	STEP_NUM 	step;                       /* 设置步 */
 	uint8_t 	mode;                       /* 模式 */
 	uint16_t 	testing_voltage;            /* 输出电压 */
 	uint16_t	open_ratio;                 /* 开路比例 0，10%-100% */
@@ -212,6 +231,7 @@ typedef struct {
 	float		cap_value;                  /* 电容值 */
 	uint8_t 	gear;                       /* 保存获取电容值时的电流档位 默认 20mA */
 	TEST_PORT	port;	                    /* 端口 */
+	WORK_PORT   work_port;                  ///< 工作端口，标示出参与工作的端口
 	
 	uint8_t 	get_cs_ok;                  /* 标记获取电容已经OK */
     
@@ -254,20 +274,47 @@ typedef struct List_Step{
 	uint8_t 	size;                       /* 大小 */
 }LIST_99xx;
 
+typedef enum{
+    NULL_U_NULL,
+	TIM_U_s,///<秒
+    VOL_U_mV,
+    VOL_U_V,
+    VOL_U_kV,
+    CUR_U_uA,
+    CUR_U_mA,
+    CUR_U_A,
+    RES_U_mOHM,
+    RES_U_OHM,
+    RES_U_MOHM,
+    RES_U_GOHM,
+    CAP_U_pF,
+    CAP_U_nF,
+    CAP_U_uF,
+}CS_UNIT_ENUM;
 /* 记忆组定义 */
 typedef struct TestGroup{
 	NODE_STEP test_steps[STEP_LIST_SIZE];
 }TESTGROUP;
 
+typedef uint16_t FILE_NUM;
+
+typedef enum{
+	G_MODE,///<G模式
+	N_MODE,///<N模式
+}WORK_MODE_T;
+typedef enum{
+	ARC_CUR_MODE,           ///<电弧侦测电流模式
+	ARC_GRADE_MODE,         ///<电弧侦测档位模式
+}ARC_MODE;
 /* 文件头的定义 */
 typedef struct Test_File{
-	uint8_t num;                            /* 文件编号，每个文件都有唯一的编号 0 默认文件 1-30用户文件 */
+	FILE_NUM num;                            /* 文件编号，每个文件都有唯一的编号 0 默认文件 1-30用户文件 */
 	char name[NAME_LON+1];	                /* 文件名称 */
-	uint8_t work_mode;	                    /* 1表示N 2表示G */
-	uint16_t hold_pass_time;                /* pass信号保持时间 */
-	uint16_t pass_buzzing_time;             /* pass蜂鸣器保持时间 */
-	uint8_t arc_mode;	                    /* 1电流模式2等级模式 */
+	WORK_MODE_T work_mode;	                    /* 1表示N 2表示G */
 	uint16_t total;	                        /* 存放该文件中一共设置了几步 */
+	uint16_t pass_buzzing_time;             /* pass蜂鸣器保持时间 */
+	uint16_t hold_pass_time;                /* pass信号保持时间 */
+	ARC_MODE arc_mode;	                    /* 1电流模式2等级模式 */
 	uint32_t create_time;                   /* 创建时间 */
 }TEST_FILE;
 

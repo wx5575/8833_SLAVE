@@ -38,6 +38,7 @@
 #include    "irq.h"
 #include    "dc_module.h"
 #include    "cs99xx_collect.h"
+#include    "module_manage.h"
 
 /*
  * 函数名：record_exception_scene
@@ -876,6 +877,48 @@ void set_dc_gr_module_info(void)
         }
     }
 }
+
+void get_dis_par_unit(uint8_t mode)
+{
+    switch(cur_mode)
+    {
+        case ACW:
+            cur_vol_unit = VOL_U_kV;
+            cur_cur_unit = ac_gear[cur_gear].unit;
+            cur_real_unit = ac_gear[cur_gear].unit;
+            break;
+        case DCW:
+            cur_vol_unit = VOL_U_kV;
+            cur_cur_unit = dc_gear[cur_gear].unit;
+            cur_real_unit = dc_gear[cur_gear].unit;
+            break;
+        case IR:
+            cur_vol_unit = VOL_U_kV;
+            cur_cur_unit = ir_gear[cur_gear].unit;
+            cur_real_unit = ir_gear[cur_gear].unit;
+            break;
+        case GR:
+            cur_vol_unit = CUR_U_A;
+            cur_cur_unit = RES_U_mOHM;
+            cur_real_unit = RES_U_mOHM;
+            break;
+    }
+}
+
+uint8_t get_cur_port_work_st(WORK_PORT *work_port)
+{
+    uint16_t work_port_16;
+    
+    work_port_16 = *((uint16_t*)&work_port->ports[0]);
+    
+    /* 判断是否参与测试 */
+    if(((work_port_16 >> ((g_module_num - 1) * 2)) & 3) != 2)
+    {
+        return 0;
+    }
+    
+    return 1;
+}
 /*
  * 函数名：load_data
  * 描述  ：加载测试数据
@@ -958,8 +1001,10 @@ void load_data(void)
 			cur_real_cur = pun->acw.ac_real_cur; /* 当前真实电流 */
 			cur_arc_gear = pun->acw.arc_sur;/* 电弧侦测 */
 			cur_port = pun->acw.port;
+            cur_work_port = pun->acw.work_port;
             
             cur_frequency = load_cur_frequency(cur_frequency_gear);
+            
             
 			cur_offset_result = pun->acw.offset_result;
 			/* 如果偏移测试成功 或 手动偏移打开 */
@@ -1092,6 +1137,7 @@ void load_data(void)
 			cur_delay_t    = pun->dcw.delay_time;
 			cur_arc_gear   = pun->dcw.arc_sur;/* 电弧侦测 */
 			cur_port = pun->dcw.port;
+            cur_work_port = pun->dcw.work_port;
             cur_output_impedan = pun->dcw.output_impedance;/* 输出阻抗 */
 			cur_frequency = 400;/* 选择400赫兹 */
             
@@ -1184,6 +1230,7 @@ void load_data(void)
 			cur_low = pun->ir.lower_limit;
 			cur_delay_t = pun->ir.delay_time;
 			cur_port = pun->ir.port;
+            cur_work_port = pun->ir.work_port;
 			cur_ir_rang_h = IR_RES_H;
             
             vol_ave = cur_vol;
@@ -1310,6 +1357,7 @@ void load_data(void)
 			cur_frequency_gear = pun->gr.output_freq;
 			cur_method = pun->gr.test_method;
             cur_frequency = load_cur_frequency(cur_frequency_gear);
+            cur_work_port = pun->gr.work_port;
 			
 			cur_offset_result = pun->gr.offset_result;
 			/* 如果偏移测试成功 */
@@ -1378,6 +1426,7 @@ void load_data(void)
             cur_open_ratio = g_cur_step->one_step.bbd.open_ratio;
             cur_short_ratio = g_cur_step->one_step.bbd.short_ratio;
 			cur_port = pun->bbd.port;
+            cur_work_port = pun->bbd.work_port;
 // 			cur_frequency = 400;/* 400Hz */
 			cur_frequency_gear = g_cur_step->one_step.bbd.output_freq;/* 400Hz */
 			
@@ -1420,6 +1469,7 @@ void load_data(void)
 			cur_real_cur = pun->cc.ac_real_cur; /* 当前真实电流 */
 			cur_intensity = pun->cc.cur_intensity;/* 电流强度 */
 			cur_port = pun->cc.port;
+            cur_work_port = pun->cc.work_port;
             
 			cur_frequency = load_cur_frequency(cur_frequency_gear);
             
@@ -1458,15 +1508,17 @@ void load_data(void)
 	
 	cur_gear_bak = cur_gear;
     load_ratio(cur_mode);
-	
+	get_dis_par_unit(cur_mode);
+    
+    cur_work_st = get_cur_port_work_st(&cur_work_port);
     
     transform_test_vol_string();
     transform_test_loop_string();
     transform_test_time_string(tes_t);
 }
-///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 //                                                       //
-//				    测试程序内部接口                     //
+//				    测试程序内部接口                      //
 //                                                       //
 ///////////////////////////////////////////////////////////
 /*

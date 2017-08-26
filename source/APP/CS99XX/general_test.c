@@ -823,18 +823,18 @@ void testing_process_control(uint8_t *st)
             /* 如果下一步标记置位就加载新的测试步 */
             if(NEXT)
             {
-                /* 如果当前步不是最后一步 就加载下一步 */
-                if(g_cur_step->next != NULL)
-                {
-                    load_steps_to_list(g_cur_step->next->one_step.com.step);
-                    g_cur_step = list_99xx.head;
-                }
-                /* 否则就加载第一步 */
-                else
-                {
-                    load_steps_to_list(1);
-                    g_cur_step = list_99xx.head;
-                }
+//                /* 如果当前步不是最后一步 就加载下一步 */
+//                if(g_cur_step->next != NULL)
+//                {
+//                    load_steps_to_list(g_cur_step->next->one_step.com.step);
+//                    g_cur_step = list_99xx.head;
+//                }
+//                /* 否则就加载第一步 */
+//                else
+//                {
+//                    load_steps_to_list(1);
+//                    g_cur_step = list_99xx.head;
+//                }
             }
             
             /* 当是G模式时每次测试只能从第一步开始 */
@@ -887,6 +887,13 @@ void testing_process_control(uint8_t *st)
             /* 检查数据如果为空就退出 */
             if(cs99xx_test_fun == NULL)
             {
+                return;
+            }
+            
+            if(cur_work_st == 0)
+            {
+                cur_status = ST_WAIT;
+                *st = TEST_QUIT_CONTROL;
                 return;
             }
             
@@ -1071,6 +1078,7 @@ void testing_process_control(uint8_t *st)
         }
         case TEST_PASS_CONTROL:
         {
+            TEST_0VER = TEST_OVER_Y;//测试结束
             test_pass();
             save_cur_result(&cur_result);
             cur_status = ST_PASS;/* 当前状态为pass */

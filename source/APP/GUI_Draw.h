@@ -501,22 +501,6 @@ extern const char* except_buf[][3];
 /* 单位项 */
 EXTERN const uint8_t *unit_pool[];
 EXTERN const uint8_t *unit_pool_[];
-enum{
-    NULL_U_NULL,
-    VOL_U_mV,
-    VOL_U_V,
-    VOL_U_kV,
-    CUR_U_uA,
-    CUR_U_mA,
-    CUR_U_A,
-    RES_U_mOHM,
-    RES_U_OHM,
-    RES_U_MOHM,
-    RES_U_GOHM,
-    CAP_U_pF,
-    CAP_U_nF,
-    CAP_U_uF,
-};
 
 /********************************/
 /* 交流输出频率 */

@@ -27,13 +27,14 @@
 // #define BUZZER_SOUND(n)     {BUZZER = BUZZER_ON;g_buzzer_time = (n);}
 // #else
 #define RT_STRING(S1, S2)	(sys_par.language==CHINESE? S1:S2)
-#define BUZZER_SOUND(n)     { \
-            if(ENABLE != sys_par.silent_sw) \
-            { \
-                BUZZER = BUZZER_ON; \
-                g_buzzer_time = (n); \
-            } \
-        }
+#define BUZZER_SOUND(n)
+//{ \
+//            if(ENABLE != sys_par.silent_sw) \
+//            { \
+//                BUZZER = BUZZER_ON; \
+//                g_buzzer_time = (n); \
+//            } \
+//        }
 // #endif
 #define CYLINDER_CTRL(n)    {cur_cylinder_ctrl_status = CY_STOP; g_cylinder_ctrl_t = (n);}
 
