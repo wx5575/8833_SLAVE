@@ -213,6 +213,8 @@ void exception_handling(int8_t errnum)
 	irq_stop_relay_motion();
     close_test_timer();/* 关定时器 */
     
+    TEST_0VER = TEST_OVER_Y;//测试结束
+    
 	if(STOP)
 	{
 		return;

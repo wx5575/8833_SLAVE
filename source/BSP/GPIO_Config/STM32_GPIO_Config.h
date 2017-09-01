@@ -85,8 +85,8 @@
 
 #define BUZZER	    (PBout(1))
 
-#define TEST_OVER_N     0   //ฒโสิฮดฝแส๘
-#define TEST_OVER_Y     1   //ฒโสิฝแส๘
+#define TEST_OVER_N     1   //ฒโสิฮดฝแส๘
+#define TEST_OVER_Y     0   //ฒโสิฝแส๘
 #define TEST_0VER   (PFout(1))
 
 #define	BUZZER_OFF	(0)

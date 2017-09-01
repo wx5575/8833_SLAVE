@@ -76,14 +76,7 @@ void GPIO_Configuration(void)
     /* ≤‚ ‘ÕÍ≥…–≈∫≈ */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_Init(GPIOF, &GPIO_InitStructure);
-    
-    
-    
-    
-    
-    
-    
-    
+    TEST_0VER = TEST_OVER_N;
     
 	return;
 }

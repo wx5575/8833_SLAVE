@@ -1163,54 +1163,57 @@ void testing_process_control(uint8_t *st)
                 CONT = 0;
                 save_cur_result(&cur_result);
                 stop_test();/* 停止测试 */
+                PASS = 1;/* 当不再进行测试时就将pass标志写1 */
+                *st = TEST_PASS_CONTROL;
                 
-                /* 当前步不是最后一步 */
-                if(g_cur_step->next != NULL)
-                {
+//                
+//                /* 当前步不是最后一步 */
+//                if(g_cur_step->next != NULL)
+//                {
                     /* 当前步没有发生异常 */
-                    if(!CUR_FAIL)
-                    {
-                        test_pass();
-                    }
-                    
-                    /* 加载下一步 */
-                    load_steps_to_list(g_cur_step->one_step.com.step + 1);
-                    g_cur_step = list_99xx.head;
-                }
-                /* 当前步是最后一步 */
-                else
-                {
-                    /* 间隔时间为0 */
-                    if(int_t == 0)
-                    {
-                        /* 当前步没有发生异常 结束测试退出 */
-                        if(!CUR_FAIL)
-                        {
-                            PASS = 1;/* 当不再进行测试时就将pass标志写1 */
-                            *st = TEST_PASS_CONTROL;
-                            break;
-                        }
-                    }
-                    /* 加载第一步 */
-                    load_steps_to_list(1);
-                    g_cur_step = list_99xx.head;
-                }
-                
-                load_data();/* 加载数据 */
-                update_info();/* 更新界面 */
-                
-                OSTimeDlyHMSM(0,0,0,5);/* 延时 */
-                
-                /* 如果按下了复位键就停止测试 */
-                if(TERMINATE)
-                {
-                    *st = TEST_STOP_CONTROL;
-                }
-                /* 启动测试 */
-                else
-                {
-                    *st = TEST_START_CONTROL;
-                }
+//                    if(!CUR_FAIL)
+//                    {
+//                        test_pass();
+//                    }
+//                    
+//                    /* 加载下一步 */
+//                    load_steps_to_list(g_cur_step->one_step.com.step + 1);
+//                    g_cur_step = list_99xx.head;
+//                }
+//                /* 当前步是最后一步 */
+//                else
+//                {
+//                    /* 间隔时间为0 */
+//                    if(int_t == 0)
+//                    {
+//                        /* 当前步没有发生异常 结束测试退出 */
+//                        if(!CUR_FAIL)
+//                        {
+//                            PASS = 1;/* 当不再进行测试时就将pass标志写1 */
+//                            *st = TEST_PASS_CONTROL;
+//                            break;
+//                        }
+//                    }
+//                    /* 加载第一步 */
+//                    load_steps_to_list(1);
+//                    g_cur_step = list_99xx.head;
+//                }
+//                
+//                load_data();/* 加载数据 */
+//                update_info();/* 更新界面 */
+//                
+//                OSTimeDlyHMSM(0,0,0,5);/* 延时 */
+//                
+//                /* 如果按下了复位键就停止测试 */
+//                if(TERMINATE)
+//                {
+//                    *st = TEST_STOP_CONTROL;
+//                }
+//                /* 启动测试 */
+//                else
+//                {
+//                    *st = TEST_START_CONTROL;
+//                }
             }
             break;
         }

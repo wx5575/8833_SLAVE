@@ -37,6 +37,7 @@ enum{
     GET_SLAVE_TEST_DATA     = 12,///<获取测试数据
     TEST_OVER_SIGN_H        = 13,///<控制从机测试完成信息输出高电平
     TEST_OVER_SIGN_L        = 14,///<控制从机测试完成信号输出低电平
+    GET_SLAVE_TEST_TIME     = 15,///<获取从机测试时间
     
     SLAVE_NEW_FILE          = 30,///<新建文件
     SLAVE_EDIT_FILE         = 31,///<设置文件
@@ -204,6 +205,11 @@ void test_over_sign_l(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     TEST_0VER = TEST_OVER_N;
 }
+void get_slave_test_time(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+{
+    memcpy(ack_data, (void*)&g_dis_time, sizeof(g_dis_time));
+    *len = sizeof(g_dis_time);
+}
 
 void get_slave_test_data(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
@@ -220,6 +226,15 @@ void get_slave_test_data(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     test_data->work_st = cur_work_st;
     memcpy(&test_data->mode, mode_pool[0][cur_mode], sizeof(test_data->mode));
     sprintf((char*)&test_data->step, "%d/%d", cur_step, g_cur_file->total);
+    
+    if(cur_work_st == 1)
+    {
+        test_data->usable = 1;
+    }
+    else
+    {
+        test_data->usable = 0;
+    }
     
     *len = sizeof(COMM_TEST_DATA);
 }
@@ -416,6 +431,7 @@ void slave_load_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     
     load_steps_to_list(step_num);
     g_cur_step = list_99xx.head;
+    TEST_0VER = TEST_OVER_N;//测试结束
 }
 
 
@@ -444,6 +460,7 @@ void slave_edit_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     
     memcpy(g_cur_step, step, sizeof(NODE_STEP));
     save_cur_step();
+    load_data();
 }
 void slave_read_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
@@ -610,6 +627,9 @@ CS_BOOL source_cmd_dispose(FRAME_T *frame, FRAME_T *ack_frame, uint32_t *frame_l
             break;
         case TEST_OVER_SIGN_L:
             test_over_sign_l(frame->data, ack_frame->data, frame_len);
+            break;
+        case GET_SLAVE_TEST_TIME:
+            get_slave_test_time(frame->data, ack_frame->data, frame_len);
             break;
         default:
             res = CS_FALSE;

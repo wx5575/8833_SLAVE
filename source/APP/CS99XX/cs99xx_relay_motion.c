@@ -545,6 +545,7 @@ void irq_stop_relay_motion(void)
     close_sine();
     amp_relay_ctrl_off();
     close_hv();/* 关闭高压基准 2017.5.13 */
+    TEST_0VER = TEST_OVER_Y;//测试结束
 }
 
 /*

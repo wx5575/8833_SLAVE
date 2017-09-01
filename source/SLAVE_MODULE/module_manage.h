@@ -117,6 +117,7 @@ typedef struct{
     CS_UNIT_ENUM vol_unit;///<电压单位
     CS_UNIT_ENUM cur_unit;///<电流/电阻单位
     CS_UNIT_ENUM real_unit;///<真实电流等单位
+    uint8_t usable;///<数据可以使用标记
 }COMM_TEST_DATA;
 
 #ifdef   MODULE_GLOBALS
