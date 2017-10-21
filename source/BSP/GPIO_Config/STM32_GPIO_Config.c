@@ -22,7 +22,11 @@ void GPIO_Configuration(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOC| RCC_APB2Periph_GPIOG, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA
+    | RCC_APB2Periph_GPIOB
+    | RCC_APB2Periph_GPIOF
+    | RCC_APB2Periph_GPIOC
+    | RCC_APB2Periph_GPIOG, ENABLE);
 	
 	/************************** ÊäÈë ***************************/
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -63,10 +67,11 @@ void GPIO_Configuration(void)
 	//ÅäÖÃFMQ ·äÃùÆ÷PB1ÎªÊä³ö
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
+	TEST_ALARM = TEST_ALARM_N;
+    
     LED_ALL  = LED_OFF;/* ¹Ø±Õ LED */
 	
-	BUZZER = BUZZER_OFF;/* ·äÃùÆ÷ */
+//	BUZZER = BUZZER_OFF;/* ·äÃùÆ÷ */
 	
     
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF, ENABLE);
@@ -77,6 +82,10 @@ void GPIO_Configuration(void)
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 	GPIO_Init(GPIOF, &GPIO_InitStructure);
     TEST_0VER = TEST_OVER_N;
+    
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
+	GPIO_Init(GPIOF, &GPIO_InitStructure);
+    SLAVE_LED_F11 = LED_ON;
     
 	return;
 }

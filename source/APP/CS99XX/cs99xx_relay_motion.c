@@ -545,7 +545,6 @@ void irq_stop_relay_motion(void)
     close_sine();
     amp_relay_ctrl_off();
     close_hv();/* 关闭高压基准 2017.5.13 */
-    TEST_0VER = TEST_OVER_Y;//测试结束
 }
 
 /*
@@ -1446,7 +1445,7 @@ void test_reset(void)
 	close_sine();/* 关闭正弦波 */
 	
 	LED_ALL = LED_OFF;/* 关闭LED指示灯 */
-	BUZZER = BUZZER_OFF;
+//	BUZZER = BUZZER_OFF;
 	
 	if(!(cur_step == 1 && sys_par.output_delay > 0))
 	{

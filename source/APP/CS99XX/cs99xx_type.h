@@ -376,6 +376,7 @@ typedef struct{
 	
     PORTS_CTRL_TYPE ports_ctrl_type;/* 多路控制硬件选择 */
 	PORT_NUM_TYPE port_num;/* 测试端口数 0 4 8 */
+	PORT_NUM_TYPE work_port_num;/* 工作端口数 0 4 8 */
     
 	FREQ_TYPE hz_type;/* 频率的类型 分为等级和连续 默认是连续模式 */
 	FREQ_TYPE gr_hz_type;/* 频率的类型 分为等级和连续 默认是连续模式 */

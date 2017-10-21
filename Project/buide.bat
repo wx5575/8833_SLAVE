@@ -1,0 +1,1 @@
+D:\Keil\ARM\ARMCC\bin\fromelf.exe --bin -o ../SYN_ROAD.bin  ../../8833_SLAVE_output/obj/SYN_ROAD.axf

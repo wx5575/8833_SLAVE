@@ -69,7 +69,7 @@ void HardFault_Handler(void)
     if(BUZZER_EN > 0)
     {
         int i = 0;
-        BUZZER = !BUZZER;
+//        BUZZER = !BUZZER;
         for(i=0;i < 1000000;i++);
     }
   }

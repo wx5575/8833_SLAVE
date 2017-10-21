@@ -581,6 +581,8 @@ extern void dis_offset_test_ports(const TEST_PORT *pport);
 extern void serve_test_poll_task(void);
 extern void wait_dc_gr_send_task_idle(void);
 
+extern void reset_test_env(void);
+
 #endif //__SERVE_TEST_H__
 
 /******************* (C) COPYRIGHT 2014 ³¤Ê¢ÒÇÆ÷ *****END OF FILE****/

@@ -14,7 +14,7 @@
 #include "cs99xx_struct.h"
 #include "com_comm.h"
 
-#define FRAME_HEAD_SIZE    4  ///<帧头的字节个数
+#define FRAME_HEAD_SIZE    6  ///<帧头的字节个数
 #define CRC_LEN             2  ///<CRC校验字节个数
 
 /**
@@ -92,6 +92,7 @@ typedef struct{
     uint8_t addr;
     uint16_t fun_code;
     uint8_t st;
+    uint16_t data_len;
     uint8_t data[512];
 }FRAME_T;
 #pragma pack()
@@ -118,8 +119,44 @@ typedef struct{
     CS_UNIT_ENUM cur_unit;///<电流/电阻单位
     CS_UNIT_ENUM real_unit;///<真实电流等单位
     uint8_t usable;///<数据可以使用标记
-}COMM_TEST_DATA;
+}COMM_TEST_DATAx;
+#pragma pack(1)
+typedef struct{
+    uint16_t vol;///<电压
+    uint16_t cur;///<电流
+    uint16_t real;///<真实电流
+    uint8_t range;///<电流量程
+}ACW_COMM_TEST_DATA;
 
+typedef struct{
+    uint16_t vol;///<电压
+    uint16_t cur;///<电流
+    uint8_t range;///<电流量程
+}DCW_COMM_TEST_DATA;
+
+typedef struct{
+    uint16_t vol;///<电压
+    uint16_t res;///<电阻
+    uint8_t range;///<电阻量程
+}IR_COMM_TEST_DATA;
+typedef struct{
+    uint16_t cur;///<电流
+    uint16_t res;///<电阻
+}GR_COMM_TEST_DATA;
+
+typedef struct{
+    uint16_t time;///<测试时间
+    uint8_t flag;///<测试标记
+    uint8_t status;///<测试状态
+    union{
+        ACW_COMM_TEST_DATA acw;///<ACW测试数据
+        DCW_COMM_TEST_DATA dcw;///<DCW测试数据
+        IR_COMM_TEST_DATA ir;///<IR测试数据
+        GR_COMM_TEST_DATA gr;///<GR测试数据
+    }un;
+}UN_COMM_TEST_DATA;
+
+#pragma pack()
 #ifdef   MODULE_GLOBALS
 #define  MODULE_EXT
 #else

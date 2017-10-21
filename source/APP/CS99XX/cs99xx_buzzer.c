@@ -22,12 +22,12 @@ void buzzer_flicker(void)
     {
         if(n == 80)
         {
-            BUZZER = BUZZER_ON;
+//            BUZZER = BUZZER_ON;
         }
         
         if(n == 200)
         {
-            BUZZER = BUZZER_OFF;
+//            BUZZER = BUZZER_OFF;
         }
         
         if(++n > 200)
@@ -50,7 +50,7 @@ void buzzer_delay_off(void)
     {
         if(0 == --g_buzzer_time)/* ·äÃùÆ÷¶¨Ê±Æ÷ */
         {
-            BUZZER = BUZZER_OFF;
+//            BUZZER = BUZZER_OFF;
         }
     }
 }

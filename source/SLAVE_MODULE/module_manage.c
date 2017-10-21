@@ -200,10 +200,12 @@ void start_slave_test(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 void test_over_sign_h(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     TEST_0VER = TEST_OVER_Y;
+//    TEST_ALARM = TEST_ALARM_Y;
 }
 void test_over_sign_l(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     TEST_0VER = TEST_OVER_N;
+//    TEST_ALARM = TEST_ALARM_N;
 }
 void get_slave_test_time(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
@@ -211,32 +213,67 @@ void get_slave_test_time(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     *len = sizeof(g_dis_time);
 }
 
+//void get_slave_test_data(uint8_t *data, uint8_t *ack_data, uint32_t *len)
+//{
+//    COMM_TEST_DATA *test_data = (void*)ack_data;
+//    
+//    memcpy(&test_data->vol, output_buf, sizeof(test_data->vol));
+//    memcpy(&test_data->cur, loop_buf, sizeof(test_data->cur));
+//    memcpy(&test_data->time, time_buf, sizeof(test_data->time));
+//    test_data->status = cur_status;
+//    get_dis_par_unit(cur_mode);
+//    test_data->vol_unit = cur_vol_unit;
+//    test_data->cur_unit = cur_cur_unit;
+//    test_data->real_unit = cur_real_unit;
+//    test_data->work_st = cur_work_st;
+//    memcpy(&test_data->mode, mode_pool[0][cur_mode], sizeof(test_data->mode));
+//    sprintf((char*)&test_data->step, "%d/%d", cur_step, g_cur_file->total);
+//    
+//    if(cur_work_st == 1)
+//    {
+//        test_data->usable = 1;
+//    }
+//    else
+//    {
+//        test_data->usable = 0;
+//    }
+//    
+//    *len = sizeof(COMM_TEST_DATA);
+//}
+
 void get_slave_test_data(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
-    COMM_TEST_DATA *test_data = (void*)ack_data;
+    UN_COMM_TEST_DATA *test_data = (void*)ack_data;
     
-    memcpy(&test_data->vol, output_buf, sizeof(test_data->vol));
-    memcpy(&test_data->cur, loop_buf, sizeof(test_data->cur));
-    memcpy(&test_data->time, time_buf, sizeof(test_data->time));
+    test_data->time = g_dis_time;
     test_data->status = cur_status;
-    get_dis_par_unit(cur_mode);
-    test_data->vol_unit = cur_vol_unit;
-    test_data->cur_unit = cur_cur_unit;
-    test_data->real_unit = cur_real_unit;
-    test_data->work_st = cur_work_st;
-    memcpy(&test_data->mode, mode_pool[0][cur_mode], sizeof(test_data->mode));
-    sprintf((char*)&test_data->step, "%d/%d", cur_step, g_cur_file->total);
+    test_data->flag = cur_work_st;
     
-    if(cur_work_st == 1)
+    switch(cur_mode)
     {
-        test_data->usable = 1;
-    }
-    else
-    {
-        test_data->usable = 0;
+        case ACW:
+            test_data->un.acw.vol = vol_ave;
+            test_data->un.acw.cur = cur_ave;
+            test_data->un.acw.real = real_ave;
+            test_data->un.acw.range = cur_gear;
+            break;
+        case DCW:
+            test_data->un.dcw.vol = vol_ave;
+            test_data->un.dcw.cur = cur_ave;
+            test_data->un.dcw.range = cur_gear;
+            break;
+        case IR:
+            test_data->un.ir.vol = vol_ave;
+            test_data->un.ir.res = res_ave;
+            test_data->un.ir.range = cur_gear;
+            break;
+        case GR:
+            test_data->un.gr.cur = cur_ave;
+            test_data->un.gr.res = res_ave;
+            break;
     }
     
-    *len = sizeof(COMM_TEST_DATA);
+    *len = sizeof(UN_COMM_TEST_DATA);
 }
 void slave_new_file(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
@@ -390,7 +427,7 @@ void slave_insert_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     uint8_t mode;
     uint16_t step = 0;
     
-    step = g_cur_file->total;
+    step = g_cur_step->one_step.com.step;
 	
     memcpy(&mode, data, sizeof(mode));
     
@@ -417,7 +454,6 @@ void slave_insert_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     save_list();/* 将改变后的结果保存 */
 }
 
-
 void slave_load_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     uint16_t step_num = 0;
@@ -425,6 +461,11 @@ void slave_load_step(uint8_t *data, uint8_t *ack_data, uint32_t *len)
     memcpy(&step_num, data, sizeof(step_num));
     
     if(0 != check_step_exist_for_comm(step_num))
+    {
+        return;
+    }
+    
+    if(FAIL)
     {
         return;
     }
@@ -593,6 +634,7 @@ CS_BOOL com_cmd_dispose(FRAME_T *frame, FRAME_T *ack_frame, uint32_t *frame_len)
             break;
         case SET_MODULE_NUM:
             set_module_num(frame->data, ack_frame->data, frame_len);
+            SLAVE_LED_F11++;
             break;
         case FORMAT_DATA:
             format_data(frame->data, ack_frame->data, frame_len);
@@ -867,6 +909,7 @@ void com_receive_dispose(COM_STRUCT *com, uint8_t *data, uint32_t len)
     /* 发送应答 */
     if(frame->addr != 0)
     {
+        ack_frame->data_len = frame_len - FRAME_HEAD_SIZE;
         send_frame_data(com, (uint8_t*)ack_frame, frame_len);
     }
 }

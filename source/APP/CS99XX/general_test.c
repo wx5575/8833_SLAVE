@@ -434,7 +434,7 @@ void dis_fail(void)
 	/* 蜂鸣器长鸣 */
     if(BUZZER_EN>0)
     {
-        BUZZER = BUZZER_ON;
+//        BUZZER = BUZZER_ON;
     }
     
     /* 大电容测试放电完成后电压电流都显示0 */
@@ -472,7 +472,7 @@ void dis_fail(void)
 	
     if(BUZZER_EN>0)
     {
-        BUZZER = BUZZER_OFF;
+//        BUZZER = BUZZER_OFF;
     }
 	
 	g_cur_step = list_99xx.head;
@@ -488,7 +488,7 @@ void dis_stop(void)
 	PASS = 0;
 	TEST = 0;
 	LED_TEST = 0;
-	BUZZER = BUZZER_OFF;
+//	BUZZER = BUZZER_OFF;
 	
 	g_return = 0;
 	
@@ -1119,6 +1119,7 @@ void testing_process_control(uint8_t *st)
         }
         case TEST_STOP_CONTROL:
         {
+            TEST_0VER = TEST_OVER_Y;//测试结束
             plc_signal_cmd(PLC_SIG_RESET);
             
             /* 大电容测试等待电容发电完成 */
@@ -1395,6 +1396,17 @@ enum{
     GENERAL_TEST_UI,/* 普通测试界面 */
     OFFSEET_TEST_UI,/* 偏移测试界面 */
 };
+
+void reset_test_env(void)
+{
+    irq_stop_relay_motion();/* 关闭电子开关 高压 */
+    cur_status = ST_STOP;
+    clear_test_falg();/* 清空标志位 */
+    STOP_INT(DISABLE);/* 关闭中断 */
+    LED_FAIL = LED_OFF;/* 关闭LED_FAIL灯 */
+    TEST_0VER = TEST_OVER_N;//清除测试结束
+    TEST_ALARM  = TEST_ALARM_N;//清除报警信号
+}
 /*
  * 函数名:serve_test
  * 描述  :
@@ -1461,7 +1473,7 @@ void serve_test(void)
 		/* 按下复位键后 显示等待测试见面 可能由通信控制 */
 		if(RESET == STOP_PIN || TERMINATE/* && CUR_OVER*/)
 		{
-//            test_state = TEST_RESET_UI;
+            reset_test_env();
 		}
         
         /* 上位机更新了数据需要刷新显示 */

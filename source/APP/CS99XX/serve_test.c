@@ -2298,7 +2298,7 @@ void startup(void)
 	clear_par();/* 清空全局变量的值 */
 	FAIL = fail_bak;/* 恢复测试失败标志 */
 	LED_ALL = LED_OFF;
-	BUZZER = BUZZER_OFF;
+//	BUZZER = BUZZER_OFF;
 	g_test_time = 0;/* 清空定时器 */
 	g_dis_time = 0;
     g_plc_dly = 0;

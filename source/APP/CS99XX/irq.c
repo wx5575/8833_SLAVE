@@ -65,13 +65,20 @@ void stop_irq(void)
     
     clear_keyboard();/* 清空键盘 */
     STOP_INT(DISABLE);/* 关闭中断 */
-    BUZZER = BUZZER_OFF;/* 关闭蜂鸣 */
+//    BUZZER = BUZZER_OFF;/* 关闭蜂鸣 */
     LED_FAIL = LED_OFF;/* 关闭LED_FAIL灯 */
+    TEST_0VER = TEST_OVER_N;//清除测试结束
+    TEST_ALARM  = TEST_ALARM_N;//清除报警信号
 }
 #include "keyboard.h"
 void start_irq(void)
 {
     static uint16_t g_key_val = KEY_START;
+    
+    if(FAIL)
+    {
+        return;
+    }
     
     cur_work_st = get_cur_port_work_st(&cur_work_port);
     
@@ -88,6 +95,7 @@ void start_irq(void)
     test_flag.start_comm = 1;
     cur_status = ST_TESTING;
     TEST_0VER = TEST_OVER_N;//清除测试结束
+    TEST_ALARM  = TEST_ALARM_N;//清除报警信号
 }
 /*
  * 函数名：short_irq

@@ -45,7 +45,7 @@ static void fail_mode_stop_dispose(void)
 			LED_FAIL = LED_OFF;/* 熄灭FAIL灯 */
             if(BUZZER_EN)
             {
-                BUZZER = BUZZER_OFF;/* 不受系统开关控制 */
+//                BUZZER = BUZZER_OFF;/* 不受系统开关控制 */
             }
 			return;
 		}
@@ -174,13 +174,13 @@ static void fail_mode_next_dispose(void)
         {
             test_flag.start_comm = 0;
             FAIL_RE_START = FAIL_RE_START_NEXT;
-			BUZZER = BUZZER_OFF;
+//			BUZZER = BUZZER_OFF;
             return;
         }
         if(RESET == STOP_PIN || TERMINATE)
         {
             STOP = 1;
-			BUZZER = BUZZER_OFF;
+//			BUZZER = BUZZER_OFF;
             return;
         }
         
@@ -214,6 +214,8 @@ void exception_handling(int8_t errnum)
     close_test_timer();/* 关定时器 */
     
     TEST_0VER = TEST_OVER_Y;//测试结束
+    
+    TEST_ALARM  = TEST_ALARM_Y;
     
 	if(STOP)
 	{
@@ -252,7 +254,7 @@ void exception_handling(int8_t errnum)
             /* 蜂鸣器长鸣 */
             if(BUZZER_EN)
             {
-                BUZZER = BUZZER_ON;/* 不受系统开关控制 */
+//                BUZZER = BUZZER_ON;/* 不受系统开关控制 */
             }
             
             ERR_NUM = ERR_NONE;

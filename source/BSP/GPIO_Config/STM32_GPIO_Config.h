@@ -83,11 +83,18 @@
 #define ROW0	    (PAout(7))
 #define ROW1	    (PBout(2))
 
-#define BUZZER	    (PBout(1))
+//#define BUZZER	    (PBout(1))
 
 #define TEST_OVER_N     1   //≤‚ ‘Œ¥Ω· ¯
 #define TEST_OVER_Y     0   //≤‚ ‘Ω· ¯
 #define TEST_0VER   (PFout(1))
+
+#define SLAVE_LED_F11   (PFout(11))
+#define SLAVE_LED_F12   (PFout(12))
+
+#define TEST_ALARM_N     1   //≤‚ ‘Œ¥±®æØ
+#define TEST_ALARM_Y     0   //≤‚ ‘±®æØ
+#define TEST_ALARM  (PBout(1))
 
 #define	BUZZER_OFF	(0)
 #define BUZZER_ON	(1)
