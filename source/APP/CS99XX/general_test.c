@@ -27,6 +27,7 @@
 #include    "cs99xx_plc.h"
 #include    "cs99xx_led.h"
 #include    "cs99xx_collect.h"
+#include    "send_test_data_fpga.h"
 
 
 
@@ -1382,6 +1383,7 @@ void test_running(void)
     
     while(1)
     {
+        send_slave_test_data_fpga();
         testing_process_control(&test_state);
         OSTimeDlyHMSM(0,0,0,5);/* 把运行权交出 */
         

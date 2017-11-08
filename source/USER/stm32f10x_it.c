@@ -148,6 +148,14 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+    static int i = 0;
+    
+    if(++i >= 500)
+    {
+        i = 0;
+        SLAVE_LED_F12++;
+    }
+    
 	OSIntEnter();
 	
 	OSTimeTick(); /*CalluC/OS-II'sOSTimeTick()*/

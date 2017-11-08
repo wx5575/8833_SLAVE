@@ -40,6 +40,7 @@
 #include    "dc_module.h"
 #include 	"spi_flash.h"
 #include    "module_manage.h"
+#include    "send_test_data_fpga.h"
 
 
 /***************************全局变量*************************/
@@ -366,7 +367,7 @@ void modbus_polling_task(void *p_arg)
 	while(1)
 	{
         module_comm_task();
-        OSTimeDlyHMSM(0,0,0,10);
+        OSTimeDlyHMSM(0,0,0,20);
    	}
 }
 void modbus_master_polling_task(void *p_arg)

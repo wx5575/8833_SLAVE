@@ -1040,6 +1040,7 @@ static void auto_cal_gr_fun(void)
     uint8_t mode =  cal_order[g_cur_cal_opt_num].mode;
     uint8_t gear = get_gr_gear();
 	uint16_t temp_cur_ad, temp_vol_ad;
+    uint8_t save_only_once = 0;
 	
 	if(DC_GR_EN)
 	{
@@ -1129,11 +1130,13 @@ static void auto_cal_gr_fun(void)
         
         if(auto_cal.state == AUTOCAL_SAVEDATA)
         {
-            cal_info_un.gr.base[times].measure = auto_measure / 10;/* 测量值 */
-            cal_info_un.gr.count_ratio(&cal_info_un);
-            cal_info_un.gr.save(mode);
-            auto_cal.state = AUTOCAL_WAIT_STOP;
-            LED_FAIL++;// = LED_ON;
+            if(save_only_once == 0)
+            {
+                save_only_once = 1;
+                cal_info_un.gr.base[times].measure = auto_measure / 10;/* 测量值 */
+                cal_info_un.gr.count_ratio(&cal_info_un);
+                cal_info_un.gr.save(mode);
+            }
         }
         
 		pkey_value = OSQAccept(KeyboardQSem, &err);
@@ -1170,6 +1173,7 @@ static void auto_cal_cur_fun(void)
 	
     uint8_t mode =  cal_order[g_cur_cal_opt_num].mode;
     uint8_t gear = cal_order[g_cur_cal_opt_num].data;
+    uint8_t save_only_once = 0;
 	
 	float *unit_k;
     //单位转换通信的单位是0.01uA
@@ -1285,10 +1289,13 @@ static void auto_cal_cur_fun(void)
         
         if(auto_cal.state == AUTOCAL_SAVEDATA)
         {
-            cal_info_un.cur.base.measure = auto_measure * unit_k[gear];/* 测量值 */
-            cal_info_un.cur.count_ratio(&cal_info_un);
-            cal_info_un.cur.save(mode);
-            auto_cal.state = AUTOCAL_WAIT_STOP;
+            if(save_only_once == 0)
+            {
+                save_only_once = 1;
+                cal_info_un.cur.base.measure = auto_measure * unit_k[gear];/* 测量值 */
+                cal_info_un.cur.count_ratio(&cal_info_un);
+                cal_info_un.cur.save(mode);
+            }
         }
         
 		switch(*pkey_value)
@@ -1326,6 +1333,7 @@ static void auto_cal_vol_fun(void)
     uint8_t times = cal_order[g_cur_cal_opt_num].data;
     uint8_t mode =  cal_order[g_cur_cal_opt_num].mode;
     uint8_t gear = 0;
+    uint8_t save_only_once = 0;
     
     /* 确定电压段 */
     if((num >= ACW_VOL_SEG_11 && num <= ACW_VOL_SEG_13)
@@ -1416,10 +1424,13 @@ static void auto_cal_vol_fun(void)
         
         if(auto_cal.state == AUTOCAL_SAVEDATA)
         {
-            cal_info_un.vol.base[times].measure = auto_measure / 10.0;/* 测量值 单位V */
-            cal_info_un.vol.count_ratio(&cal_info_un);
-            cal_info_un.vol.save(mode);
-            auto_cal.state = AUTOCAL_WAIT_STOP;
+            if(save_only_once == 0)
+            {
+                save_only_once = 1;
+                cal_info_un.vol.base[times].measure = auto_measure / 10.0;/* 测量值 单位V */
+                cal_info_un.vol.count_ratio(&cal_info_un);
+                cal_info_un.vol.save(mode);
+            }
         }
         
 		pkey_value = OSQAccept(KeyboardQSem, &err);
@@ -1508,50 +1519,11 @@ void auto_calibration(void)
     
     while(1)
     {
-//		OSSemPend(ScheduleSem, 10, &err);
-        
-//         draw_frame_data(frame_buf);
-        
-        if(flag == 0)
-        {
-            dis_cal_point_base_info();
-        }
-        
-        
         if(auto_cal.state == AUTOCAL_OUTPUTING)
         {
             if(NULL != cal_order[g_cur_cal_opt_num].fun)
             {
                 cal_order[g_cur_cal_opt_num].fun();
-            }
-        }
-        
-//        if(err == OS_ERR_NONE)
-//        {
-//            if(NULL != cal_order[g_cur_cal_opt_num].fun)
-//            {
-//                dis_cal_point_base_info();
-//                cal_order[g_cur_cal_opt_num].fun();
-//                auto_cal.state = AUTOCAL_CONNECTED;
-//                if(g_cur_cal_opt_num + 1 == auto_cal.cal_total_points)
-//                {
-//                    auto_cal_pass();
-//                    BUZZER = BUZZER_ON;
-//                    OSTimeDlyHMSM(0,0,0,500);
-//                    BUZZER = BUZZER_OFF;
-//                    flag = 1;
-//                }
-////                 clear_ui_ele();
-//            }
-//        }
-        
-        if(auto_cal.state == AUTOCAL_OUTPUTING)
-        {
-//            OSSemPost(ScheduleSem);
-            if(flag == 1)
-            {
-                flag = 0;
-                draw_auto_calibration_gui();
             }
         }
         
@@ -1572,7 +1544,6 @@ void auto_calibration(void)
 			case KEY_F4:
                 return;
             case KEY_ENTER:
-//                OSSemPost(ScheduleSem);
                 if(flag == 1)
                 {
                     flag = 0;

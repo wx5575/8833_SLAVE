@@ -28,6 +28,7 @@
 #include    "cs99xx_update.h"
 #include    "spi_flash.h"
 #include    "USART3.H"
+#include    "SPI_FPGA.H"
 
 
 
@@ -148,7 +149,8 @@ void  bsp_init(void)
     
 	systick_init();		/* ‡÷‡™ ±÷”≈‰÷√ */
     
-    usart3_config(115200 * 6);
+    usart3_config(115200 * 1);
+    init_spi_fpga_gpio();
 }
 
 /*

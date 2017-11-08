@@ -825,6 +825,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\APP\CS99XX\cs99xx_bbd.c</FilePath>
             </File>
+            <File>
+              <FileName>send_test_data_fpga.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\APP\CS99XX\send_test_data_fpga.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -934,6 +939,16 @@
               <FileName>USART3.C</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\BSP\USART_Config\USART3.C</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SPI_FPGA</GroupName>
+          <Files>
+            <File>
+              <FileName>SPI_FPGA.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\BSP\SPI_FPGA\SPI_FPGA.C</FilePath>
             </File>
           </Files>
         </Group>
@@ -1680,7 +1695,7 @@
               <MiscControls></MiscControls>
               <Define>BOOT_LOADER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\45PE16;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\BSP\USART_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\source\BSP\SPI_FLASH;..\Project;..\source\tools;..\source\SLAVE_MODULE</IncludePath>
+              <IncludePath>..\source\Libraries\CMSIS;..\source\Libraries\STM32F10x_StdPeriph_Driver\inc;..\source\USER;..\source\APP;..\source\APP\CS99XX;..\source\APP\AutoCal;..\source\BSP\45PE16;..\source\BSP\ADC;..\source\BSP\ADC_DMA;..\source\BSP\BSP_Config;..\source\BSP\DAC;..\source\BSP\EE_I2C;..\source\BSP\FSMC_Config;..\source\BSP\GPIO_Config;..\source\BSP\IIC_Config;..\source\BSP\KeyBoard;..\source\BSP\m45pe16_spi_flash;..\source\BSP\MC14094;..\source\BSP\RTC_Config;..\source\BSP\SineWave;..\source\BSP\SPI_CPLD;..\source\BSP\Timer5;..\source\BSP\Timer_Config;..\source\BSP\USART_Config;..\source\CMSIS;..\source\Comm_app;..\source\FreeModbus\modbus\include;..\source\FreeModbus\modbus;..\source\FreeModbus\port;..\source\uCGUI;..\source\uCGUI\GUI_LIB\Heads;..\source\uCGUI\GUI_LIB;..\source\uCOSII\core;..\source\uCOSII\port;..\source\uCGUI\GUI_LIB\EnglishFont;..\source\uCGUI\GUI_LIB\Picture;..\source\FreeModbus\modbus\rtu;..\source\module\DC_GR_MODULE;..\source\module;..\source\BSP\SPI_FLASH;..\Project;..\source\tools;..\source\SLAVE_MODULE;..\source\BSP\SPI_FPGA</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2143,6 +2158,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\APP\CS99XX\cs99xx_bbd.c</FilePath>
             </File>
+            <File>
+              <FileName>send_test_data_fpga.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\APP\CS99XX\send_test_data_fpga.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2252,6 +2272,16 @@
               <FileName>USART3.C</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\BSP\USART_Config\USART3.C</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SPI_FPGA</GroupName>
+          <Files>
+            <File>
+              <FileName>SPI_FPGA.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\BSP\SPI_FPGA\SPI_FPGA.C</FilePath>
             </File>
           </Files>
         </Group>

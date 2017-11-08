@@ -241,6 +241,7 @@ void get_slave_test_time(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 //    *len = sizeof(COMM_TEST_DATA);
 //}
 
+
 void get_slave_test_data(uint8_t *data, uint8_t *ack_data, uint32_t *len)
 {
     UN_COMM_TEST_DATA *test_data = (void*)ack_data;
