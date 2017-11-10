@@ -1079,10 +1079,10 @@ void testing_process_control(uint8_t *st)
         }
         case TEST_PASS_CONTROL:
         {
+            cur_status = ST_PASS;/* 当前状态为pass */
             TEST_0VER = TEST_OVER_Y;//测试结束
             test_pass();
             save_cur_result(&cur_result);
-            cur_status = ST_PASS;/* 当前状态为pass */
             dis_pass();
             
             NEXT = 1;
@@ -1383,7 +1383,6 @@ void test_running(void)
     
     while(1)
     {
-        send_slave_test_data_fpga();
         testing_process_control(&test_state);
         OSTimeDlyHMSM(0,0,0,5);/* 把运行权交出 */
         

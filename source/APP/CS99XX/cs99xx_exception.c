@@ -237,7 +237,7 @@ void exception_handling(int8_t errnum)
     
     test_flag.judge_err_en == DISABLE;
     
-	cur_status = err_status_bool[l_err_num%12];/* 给上位机发的错误状态 */
+	cur_status = err_status_bool[l_err_num % 12];/* 给上位机发的错误状态 */
     cur_cylinder_ctrl_stop();
     
     test_flag.test_led_flag = 0;

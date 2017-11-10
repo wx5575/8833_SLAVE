@@ -2836,7 +2836,6 @@ int32_t check_res_data(RESULT_STR *res)
     return 0;
 }
 
-
 /*
  * 函数名：get_cur_result_fetch_for_comm
  * 描述  ：获取当前刚刚测试完的记忆组的测试结果

@@ -367,6 +367,7 @@ void modbus_polling_task(void *p_arg)
 	while(1)
 	{
         module_comm_task();
+        send_slave_test_data_fpga();
         OSTimeDlyHMSM(0,0,0,20);
    	}
 }
